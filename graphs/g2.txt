@@ -1,0 +1,6 @@
+3
+# GMT Sun Jan 31 05:15:32 2021 #/home/mahta/Desktop/project/GenerateGraph.py
+# 
+0 1
+1 0
+2 0

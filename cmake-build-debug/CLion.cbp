@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="CLion"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CLion">
+				<Option output="/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug/CLion" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/12.0.5/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug/Makefile&quot;  VERBOSE=1 CLion"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="CLion/fast">
+				<Option output="/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug/CLion" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/lib/clang/12.0.5/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/usr/include"/>
+					<Add directory="/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"/>
+					<Add directory="/System/Library/Frameworks"/>
+					<Add directory="/Library/Frameworks"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug/Makefile&quot;  VERBOSE=1 CLion/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/Users/mahtashafieesabet/Desktop/codes/CLion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/DynamicDFS.cpp">
+			<Option target="CLion"/>
+		</Unit>
+		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/DynamicDFS.h">
+			<Option target="CLion"/>
+		</Unit>
+		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/SegmentTree.cpp">
+			<Option target="CLion"/>
+		</Unit>
+		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/SegmentTree.h">
+			<Option target="CLion"/>
+		</Unit>
+		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/dataStructure.cpp">
+			<Option target="CLion"/>
+		</Unit>
+		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/dataStructure.h">
+			<Option target="CLion"/>
+		</Unit>
+		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/graph.cpp">
+			<Option target="CLion"/>
+		</Unit>
+		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/graph.h">
+			<Option target="CLion"/>
+		</Unit>
+		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/main.cpp">
+			<Option target="CLion"/>
+		</Unit>
+		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/node.cpp">
+			<Option target="CLion"/>
+		</Unit>
+		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/node.h">
+			<Option target="CLion"/>
+		</Unit>
+		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/path.cpp">
+			<Option target="CLion"/>
+		</Unit>
+		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/path.h">
+			<Option target="CLion"/>
+		</Unit>
+		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/shallowTree.cpp">
+			<Option target="CLion"/>
+		</Unit>
+		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/shallowTree.h">
+			<Option target="CLion"/>
+		</Unit>
+		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/tree.cpp">
+			<Option target="CLion"/>
+		</Unit>
+		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/tree.h">
+			<Option target="CLion"/>
+		</Unit>
+		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
