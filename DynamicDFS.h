@@ -9,10 +9,17 @@
 #include "tree.h"
 #include "shallowTree.h"
 #include "dataStructure.h"
+#include <vector>
 
 
 
-void ReducedAL(path p, dataStructure ds, tree T);
+void ComputeReducedAL(node* x, node* y, dataStructure ds, tree T);
+
+void Reroot(node* x, tree T, tree Tstar, dataStructure ds);
+
+void Toggle(vector<int> inactiveNodes, shallowTree st, graph G);
+
+void UpdateShallowTree(shallowTree st, tree T);
 
 
 

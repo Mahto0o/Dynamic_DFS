@@ -14,6 +14,7 @@ public:
     vector<path> paths;
     shallowTree();
     void makeShallowTreeOfTree(tree T);
+
 };
 
 

@@ -12,11 +12,12 @@ class path {
 public:
     node* start = NULL;
     node* end = NULL;
-    vector<path *> kids;
     path* par = NULL;
     int size = 0;
+    void setPathSize();
     path();
     path(node* start);
+    ~path();
 };
 
 

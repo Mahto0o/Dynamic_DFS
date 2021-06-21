@@ -16,12 +16,13 @@ public:
     node *par = NULL;// for tree
     vector<node* > cpNbrs;// extra neighbours list for DFS
     set<node* > ReducedAL;
-    string attr; //tree or path
+//    string attr; //tree or path
     int sizeofST = 1;
     int indexInOrderedList;// dfn(x)
     bool visited = false; // 0:unvisited, 1:visited
+    bool active = true; // 1:active, 0:inactive
     int indx = -1;// indx of the node in graph.txt
-    path* nodePath = NULL;
+    path* nodePath = nullptr;
 
     node();
 

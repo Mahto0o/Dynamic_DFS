@@ -20,6 +20,7 @@ void shallowTree::makeShallowTreeOfTree(tree T) {
         //set the size of the path
         this->paths.back().size =
                 this->paths.back().end->indexInOrderedList - this->paths.back().start->indexInOrderedList + 1;
+//        this->paths.back().setPathSize();
 
         //after stting the end of a path if there is still nodes left in the tree we make a new path starting at the next element of preorderList
         if (i + 1 < T.preOrderList.size()) {
@@ -27,20 +28,19 @@ void shallowTree::makeShallowTreeOfTree(tree T) {
         }
     }
 
-    // setting the nodepath for each node in the DFS tree T, while, we're reaching each node through preorderList
+    // setting the nodePath for each node in the DFS tree T, while, we're reaching each node through preorderList
     for (int i = 0; i < this->paths.size(); i++) {
         for (int j = this->paths[i].start->indexInOrderedList; j <= this->paths[i].end->indexInOrderedList; j++) {
             T.preOrderList[j]->nodePath = &this->paths[i];
         }
     }
 
-    //setting parent of each path in the shallow tree and then add each nodepath as it's parent children to the vector kids
+    //setting parent of each path in the shallow tree
     for (int i = 0; i < this->paths.size(); i++) {
         if (paths[i].start == T.root) {
             paths[i].par = NULL;
         } else {
             paths[i].par = paths[i].start->par->nodePath;
-            paths[i].start->par->nodePath->kids.push_back(&paths[i]);
         }
     }
 }
@@ -49,3 +49,5 @@ void shallowTree::makeShallowTreeOfTree(tree T) {
 shallowTree::shallowTree() {
 
 }
+
+

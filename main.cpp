@@ -3,6 +3,7 @@
 #include "tree.h"
 #include "shallowTree.h"
 #include "dataStructure.h"
+#include "DynamicDFS.h"
 
 using namespace std;
 #define FILENAME   "/Users/mahtashafieesabet/Desktop/codes/CLion/graphs/g3.txt"
