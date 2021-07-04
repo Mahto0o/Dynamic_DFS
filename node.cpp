@@ -4,7 +4,7 @@
 
 #include "node.h"
 
-node::node(vector<node*> neighbours, string attr):neighbours(neighbours), attr(attr){}
+//node::node(vector<node*> neighbours):neighbours(neighbours){}
 
 node::node(vector<node*> neighbours):neighbours(neighbours) {}
 
@@ -12,4 +12,12 @@ node::node() {}
 
 bool node::operator<(const node &other) const {
     return this->sizeofST < other.sizeofST;
+}
+
+bool node::operator>(const node &other) const {
+    return this->indexInOrderedList < other.indexInOrderedList;
+}
+
+bool node::less(const node &other) const {
+    return this->indexInOrderedList < other.indexInOrderedList;
 }

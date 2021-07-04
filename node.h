@@ -26,12 +26,14 @@ public:
 
     node();
 
-    node(vector<node *> neighbours, string attr);
+//    node(vector<node *> neighbours);
 
 
     node(vector<node *> neighbours);
 
     bool operator<(const node &other) const;
+    bool operator>(const node &other) const;
+    bool less(const node &other) const;
 };
 
 

@@ -95,3 +95,9 @@ tree graph::ComputeDFSTree() {
 //    T.ComputeSubtreeSizes(T.root);
     return T;
 }
+
+void graph::makeAllNodesUnvisited() {
+    for(auto &i: this->adjList){
+        i.visited = false;
+    }
+}

@@ -10,9 +10,11 @@ using namespace std;
 class node;
 class path {
 public:
-    node* start = NULL;
-    node* end = NULL;
-    path* par = NULL;
+    path* next = nullptr;
+    path* prev = nullptr;
+    node* start = nullptr;
+    node* end = nullptr;
+    path* par = nullptr;
     int size = 0;
     void setPathSize();
     path();

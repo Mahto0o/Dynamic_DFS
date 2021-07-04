@@ -17,6 +17,7 @@ public:
     void readGraph(string fileName);
     void printGraph();
     tree ComputeDFSTree();
+    void makeAllNodesUnvisited();
 
 };
 

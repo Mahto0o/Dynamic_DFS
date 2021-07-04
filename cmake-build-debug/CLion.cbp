@@ -106,6 +106,12 @@
 		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/graph.h">
 			<Option target="CLion"/>
 		</Unit>
+		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/linkedList.cpp">
+			<Option target="CLion"/>
+		</Unit>
+		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/linkedList.h">
+			<Option target="CLion"/>
+		</Unit>
 		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/main.cpp">
 			<Option target="CLion"/>
 		</Unit>
@@ -113,6 +119,12 @@
 			<Option target="CLion"/>
 		</Unit>
 		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/node.h">
+			<Option target="CLion"/>
+		</Unit>
+		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/nodeDfnCmp.cpp">
+			<Option target="CLion"/>
+		</Unit>
+		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/nodeDfnCmp.h">
 			<Option target="CLion"/>
 		</Unit>
 		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/path.cpp">
