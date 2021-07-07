@@ -3,10 +3,13 @@
 //
 #include <iostream>
 #include <stack>
+#include "DynamicDFS.h"
 #include "tree.h"
 
 using namespace std;
-
+//bool myNodeCF(node *a, node *b) {
+//    return (a->sizeofST < b->sizeofST);
+//}
 void tree::printGraph() {
     cout << this->root->indx << " is the root:\n";
     for (auto &j: this->root->children) {
@@ -24,11 +27,12 @@ void tree::printGraph() {
 }
 
 void tree::ComputePreorderList() {
+
     this->ComputeSubtreeSizes(this->root);
     for (auto &i : this->adjList) {
         if (i->children.empty()) continue;
-        sort(i->children.begin(), i->children.end());
-        reverse(i->children.begin(), i->children.end());
+        sort(i->children.begin(), i->children.end(), myNodeCF);
+//        reverse(i->children.begin(), i->children.end());
     }
     for (auto &i : this->adjList) {
 //        i->cpNbrs.clear();
@@ -72,6 +76,14 @@ void tree::ComputeSubtreeSizes(node *r) {
     }
 
 }
+
+tree::tree() {
+    this->root = nullptr;
+    this->adjList.clear();
+    this->preOrderList.clear();
+}
+
+
 /*
     preOrderList.push_back(this->adjList.front());
     stack<node *> s;

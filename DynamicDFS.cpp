@@ -4,16 +4,19 @@
 #include "DynamicDFS.h"
 #include <iostream>
 
+bool myNodeCF(node *a, node *b) {
+    return (a->sizeofST < b->sizeofST);
+}
 
-void ComputeReducedAL(node *x, node *y, dataStructure ds, tree T) {
+void ComputeReducedAL(node *x, node *y, dataStructure ds, tree *T) {
     path *miu;
     node *z;
     node *w;
     node *u;
-    miu = T.preOrderList[x->indexInOrderedList]->nodePath->par;   //p.par;
+    miu = T->preOrderList[x->indexInOrderedList]->nodePath->par;   //p.par;
     while (miu != nullptr && miu->start != nullptr && miu->end != nullptr) {
         for (int i = x->indexInOrderedList; i < y->indexInOrderedList; i++) {
-            T.preOrderList[i]->ReducedAL.insert(ds.query(T.preOrderList[i], miu->start, miu->end));
+            T->preOrderList[i]->ReducedAL.insert(ds.query(T->preOrderList[i], miu->start, miu->end));
         }
         miu = miu->par;
     }
@@ -24,7 +27,7 @@ void ComputeReducedAL(node *x, node *y, dataStructure ds, tree T) {
     }
     // C = descT(z) \ {v(dfn(x)), ..., v(dfn(y))}
     for (int i = y->indexInOrderedList + 1; i < x->indexInOrderedList + x->sizeofST; i++) { //2 to 11
-        u = T.preOrderList[i];
+        u = T->preOrderList[i];
         w = ds.query(u, x, y);
         if (w != nullptr && u->active) {
             w->ReducedAL.insert(u);
@@ -33,8 +36,9 @@ void ComputeReducedAL(node *x, node *y, dataStructure ds, tree T) {
 
 }
 
-void Reroot(node *x, tree T, tree *Tstar, dataStructure ds, shallowTree *st) {
+void Reroot(node *x, tree *T, tree *Tstar, dataStructure ds, shallowTree *st) {
     bool startIsfurthur;
+    // handle node insertion
     int startdfn = x->nodePath->start->indexInOrderedList;
     int enddfn = x->nodePath->end->indexInOrderedList;
     if (x->indexInOrderedList - startdfn >= enddfn - x->indexInOrderedList) {
@@ -44,16 +48,20 @@ void Reroot(node *x, tree T, tree *Tstar, dataStructure ds, shallowTree *st) {
         for (int i = x->indexInOrderedList - 1; i >= startdfn; i--) {
             if (i == x->indexInOrderedList - 1 && Tstar->adjList.empty()) {
                 //add the node to Tstar
-                Tstar->adjList.push_back(T.preOrderList[i + 1]);
-                T.preOrderList[i + 1]->children.clear();
+                Tstar->adjList.push_back(T->preOrderList[i + 1]);
+                T->preOrderList[i + 1]->children.clear();
             }
             //add the node to Tstar
-            Tstar->adjList.push_back(T.preOrderList[i]);
+            Tstar->adjList.push_back(T->preOrderList[i]);
             // set the node parent
-            T.preOrderList[i]->par = T.preOrderList[i + 1];
-            T.preOrderList[i + 1]->children.push_back(T.preOrderList[i]);
+            T->preOrderList[i]->par = T->preOrderList[i + 1];
+            T->preOrderList[i + 1]->children.push_back(T->preOrderList[i]);
             // set the node children
-            T.preOrderList[i]->children.clear();
+            T->preOrderList[i]->children.clear();
+        }
+        if (x->indexInOrderedList == startdfn && Tstar->adjList.empty()) {
+            Tstar->adjList.push_back(T->preOrderList[x->indexInOrderedList]);
+            T->preOrderList[x->indexInOrderedList]->children.clear();
         }
 
         //Update RAL(L) for vertices on the path (x.nodepath.start, x)
@@ -61,7 +69,7 @@ void Reroot(node *x, tree T, tree *Tstar, dataStructure ds, shallowTree *st) {
 
         // add untraversed path to paths
         if (x != x->nodePath->end) {
-            x->nodePath->end = T.preOrderList[x->indexInOrderedList + 1];
+            x->nodePath->end = T->preOrderList[x->indexInOrderedList + 1];
         } else {
             //to check the correctness
 //            x->nodePath->start = x->nodePath->end;
@@ -72,15 +80,15 @@ void Reroot(node *x, tree T, tree *Tstar, dataStructure ds, shallowTree *st) {
 
         // mark all nodes on the path as visited
         for (int i = startdfn; i <= x->indexInOrderedList; i++) {
-            T.preOrderList[i]->visited = true;
+            T->preOrderList[i]->visited = true;
         }
 
         for (int i = startdfn; i <= x->indexInOrderedList; i++) {
-            for (auto &u: T.preOrderList[i]->ReducedAL) {
+            for (auto &u: T->preOrderList[i]->ReducedAL) {
                 if (!u->visited) {
                     Tstar->adjList.push_back(u);
-                    T.preOrderList[i]->children.push_back(u);
-                    u->par = T.preOrderList[i];
+                    T->preOrderList[i]->children.push_back(u);
+                    u->par = T->preOrderList[i];
                     u->children.clear();
                     Reroot(u, T, Tstar, ds, st);
                 }
@@ -94,16 +102,16 @@ void Reroot(node *x, tree T, tree *Tstar, dataStructure ds, shallowTree *st) {
         for (int i = x->indexInOrderedList + 1; i <= enddfn; i++) {
             if (i == x->indexInOrderedList + 1 && Tstar->adjList.empty()) {
                 //add the node to Tstar
-                Tstar->adjList.push_back(T.preOrderList[i - 1]);
-                T.preOrderList[i - 1]->children.clear();
+                Tstar->adjList.push_back(T->preOrderList[i - 1]);
+                T->preOrderList[i - 1]->children.clear();
             }
             //add the node to Tstar
-            Tstar->adjList.push_back(T.preOrderList[i]);
+            Tstar->adjList.push_back(T->preOrderList[i]);
             // set the node parent
-            T.preOrderList[i]->par = T.preOrderList[i - 1];
-            T.preOrderList[i - 1]->children.push_back(T.preOrderList[i]);
+            T->preOrderList[i]->par = T->preOrderList[i - 1];
+            T->preOrderList[i - 1]->children.push_back(T->preOrderList[i]);
             // set the node children
-            T.preOrderList[i]->children.clear();
+            T->preOrderList[i]->children.clear();
         }
 
         //Update L for vertices on path (x.nodepath.start, x)
@@ -111,7 +119,7 @@ void Reroot(node *x, tree T, tree *Tstar, dataStructure ds, shallowTree *st) {
 
         // add untraversed path to paths
         if (x != x->nodePath->start) {
-            x->nodePath->end = T.preOrderList[x->indexInOrderedList - 1];
+            x->nodePath->end = T->preOrderList[x->indexInOrderedList - 1];
         } else {
             //to check the correctness
 //            x->nodePath->end = x->nodePath->start;
@@ -121,14 +129,14 @@ void Reroot(node *x, tree T, tree *Tstar, dataStructure ds, shallowTree *st) {
 
         // mark all nodes on the path as visited
         for (int i = x->indexInOrderedList; i <= enddfn; i++) {
-            T.preOrderList[i]->visited = true;
+            T->preOrderList[i]->visited = true;
         }
         for (int i = x->indexInOrderedList; i <= enddfn; i++) {
-            for (auto &u: T.preOrderList[i]->ReducedAL) {
+            for (auto &u: T->preOrderList[i]->ReducedAL) {
                 if (!u->visited) {
                     Tstar->adjList.push_back(u);
-                    T.preOrderList[i]->children.push_back(u);
-                    u->par = T.preOrderList[i];
+                    T->preOrderList[i]->children.push_back(u);
+                    u->par = T->preOrderList[i];
                     u->children.clear();
                     Reroot(u, T, Tstar, ds, st);
                 }
@@ -138,14 +146,36 @@ void Reroot(node *x, tree T, tree *Tstar, dataStructure ds, shallowTree *st) {
 
 }
 
-void Toggle(vector<int> inactiveNodes, shallowTree *st, graph *G) {
+void Toggle(vector<int> inactiveNodes, vector<int> activeNodes, shallowTree *st, graph *G) {
     for (auto &i: inactiveNodes) {
         G->adjList[i].active = false;
     }
+    for(auto &i: activeNodes){
+        G->adjList[i].active = true;
+    }
 }
 
-void UpdateShallowTree(vector<int> inactiveNodes, shallowTree *st, tree *T, graph *G) {
+void UpdateShallowTree(vector<int> inactiveNodes, vector<int> activeNodes, shallowTree *st, tree *T, graph *G) {
+    for (auto &i:activeNodes) {
+        //add the node to shallow tree
+        st->paths.push_back(&G->adjList[i]);
+        st->paths.back()->end = &G->adjList[i];
+        st->paths.back()->setPathSize();
 
+        //add the node to dfs tree and set the indexInOrderedList
+        T->adjList.push_back(&G->adjList[i]);
+        T->preOrderList.push_back(&G->adjList[i]);
+        G->adjList[i].indexInOrderedList = T->preOrderList.size()-1;
+
+
+        //add the node to it's neighbour ReducedAl and vice versa
+        for (auto &j:G->adjList[i].neighbours) {
+            if (j->active) {
+                j->ReducedAL.insert(&G->adjList[i]);
+                G->adjList[i].ReducedAL.insert(j);
+            }
+        }
+    }
     for (auto &i:inactiveNodes) {
         if (G->adjList[i].nodePath != nullptr) {
 
@@ -164,7 +194,7 @@ void UpdateShallowTree(vector<int> inactiveNodes, shallowTree *st, tree *T, grap
                     //set the start
                     st->paths.push_back(T->preOrderList[j]);
                     startIsSet = true;
-                    continue;
+//                    continue;
                 }
 
                 if (!T->preOrderList[j]->active && startIsSet) {
@@ -180,6 +210,9 @@ void UpdateShallowTree(vector<int> inactiveNodes, shallowTree *st, tree *T, grap
                 }
             }
             // delete this nodePath G.adjList[i].nodePath
+//            if(startIsSet){
+//                st->paths.back()->end =
+//            }
             st->paths.erase(p);
 //            p->~path();
         }

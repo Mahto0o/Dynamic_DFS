@@ -13,13 +13,14 @@
 
 
 
-void ComputeReducedAL(node* x, node* y, dataStructure ds, tree T);
+void ComputeReducedAL(node* x, node* y, dataStructure ds, tree* T);
 
-void Reroot(node* x, tree T, tree* Tstar, dataStructure ds, shallowTree *st);
+void Reroot(node* x, tree *T, tree* Tstar, dataStructure ds, shallowTree *st);
 
-void Toggle(vector<int> inactiveNodes, shallowTree* st, graph* G);
+void Toggle(vector<int> inactiveNodes, vector<int> activeNodes, shallowTree* st, graph* G);
 
-void UpdateShallowTree(vector<int> inactiveNodes, shallowTree* st, tree* T, graph* G);
+void UpdateShallowTree(vector<int> inactiveNodes, vector<int> activeNodes, shallowTree* st, tree* T, graph* G);
+bool myNodeCF(node *a, node *b);
 
 
 

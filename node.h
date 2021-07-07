@@ -30,10 +30,9 @@ public:
 
 
     node(vector<node *> neighbours);
-
-    bool operator<(const node &other) const;
-    bool operator>(const node &other) const;
-    bool less(const node &other) const;
+//    bool myNodeCF(node* a, node* b);
+//    bool operator<(const node &other) const;
+//    bool operator>(const node &other) const;
 };
 
 

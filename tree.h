@@ -11,9 +11,11 @@ public:
     vector<node*> adjList;
     vector<node*> preOrderList;
     node* root;
+    tree();
     void printGraph();
     void ComputePreorderList();
     void ComputeSubtreeSizes(node * r);
+//    bool myNodeCF(node* a, node* b);
 };
 
 

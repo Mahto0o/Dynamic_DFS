@@ -15,7 +15,7 @@ class shallowTree {
 public:
     linkedList paths;//list of path*
     shallowTree();
-    void makeShallowTreeOfTree(tree T);
+    void makeShallowTreeOfTree(tree* T);
 
 };
 

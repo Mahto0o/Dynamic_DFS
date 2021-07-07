@@ -69,8 +69,14 @@ CMakeFiles/CLion.dir/shallowTree.cpp.o: ../shallowTree.cpp
 CMakeFiles/CLion.dir/shallowTree.cpp.o: ../shallowTree.h
 CMakeFiles/CLion.dir/shallowTree.cpp.o: ../tree.h
 
+CMakeFiles/CLion.dir/tree.cpp.o: ../DynamicDFS.h
+CMakeFiles/CLion.dir/tree.cpp.o: ../dataStructure.h
+CMakeFiles/CLion.dir/tree.cpp.o: ../graph.h
+CMakeFiles/CLion.dir/tree.cpp.o: ../linkedList.h
 CMakeFiles/CLion.dir/tree.cpp.o: ../node.h
+CMakeFiles/CLion.dir/tree.cpp.o: ../nodeDfnCmp.h
 CMakeFiles/CLion.dir/tree.cpp.o: ../path.h
+CMakeFiles/CLion.dir/tree.cpp.o: ../shallowTree.h
 CMakeFiles/CLion.dir/tree.cpp.o: ../tree.cpp
 CMakeFiles/CLion.dir/tree.cpp.o: ../tree.h
 

@@ -28,24 +28,43 @@ int main() {
 
     T.ComputePreorderList();
     cout << T.preOrderList.size() << endl;
-    for (int i = 0; i < T.preOrderList.size(); i++) {
-        cout << T.preOrderList[i]->indx << " dfn:" << i << " " << T.preOrderList[i]->indexInOrderedList << "\n";
-    }
+//    for (int i = 0; i < T.preOrderList.size(); i++) {
+//        cout << T.preOrderList[i]->indx << " dfn:" << i << " " << T.preOrderList[i]->indexInOrderedList << "\n";
+//    }
     shallowTree st;
-    st.makeShallowTreeOfTree(T);
+    st.makeShallowTreeOfTree(&T);
     dataStructure D;
     D.computeDs(G, T);
-    cout <<"hello:"<<T.preOrderList[8]->indx<<":"<< D.query(T.preOrderList[8], T.preOrderList[0], T.preOrderList[2])->indx << endl;
+//    cout <<"hello:"<<T.preOrderList[8]->indx<<":"<< D.query(T.preOrderList[8], T.preOrderList[0], T.preOrderList[2])->indx << endl;
 //    cout << D.query(T.preOrderList[5], st.paths[0].start, st.paths[0].end)->indx;
-    vector<int> inactiveNodes ;//= {3,10,5};
+    vector<int> inactiveNodes;//= {3,10,5};
+    inactiveNodes.push_back(2);
     inactiveNodes.push_back(3);
-    inactiveNodes.push_back(10);
-    inactiveNodes.push_back(5);
+    inactiveNodes.push_back(8);
+    vector<int> activeNodes;
     G.makeAllNodesUnvisited();
-    Toggle(inactiveNodes, &st, &G);
-    UpdateShallowTree(inactiveNodes, &st, &T, &G);
-    tree* Tsrar;
-    Reroot(T.root, T, Tsrar, D, &st);
+    Toggle(inactiveNodes, activeNodes, &st, &G);
+    UpdateShallowTree(inactiveNodes, activeNodes, &st, &T, &G);
+    tree *Tsrar = new tree();
+    Reroot(T.root, &T, Tsrar, D, &st);
     Tsrar->root = T.root;
+    Tsrar->ComputePreorderList();
+    inactiveNodes.clear();
+    inactiveNodes.push_back(7);
+    inactiveNodes.push_back(9);
+    inactiveNodes.push_back(1);
+    activeNodes.push_back(3);
+    G.makeAllNodesUnvisited();
+    Tsrar->root->visited = false;
+    Tsrar->root->ReducedAL.clear();
+    st.makeShallowTreeOfTree(Tsrar);
+    Toggle(inactiveNodes, activeNodes, &st, &G);
+    UpdateShallowTree(inactiveNodes, activeNodes, &st, Tsrar, &G);
+    T.adjList.clear();
+    T.preOrderList.clear();
+    T.root = nullptr;
+    Reroot(Tsrar->root, Tsrar, &T, D, &st);
+    T.root = Tsrar->root;
+    T.ComputePreorderList();
     return 0;
 }

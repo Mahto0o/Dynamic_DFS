@@ -4,18 +4,18 @@
 #include <iostream>
 #include "shallowTree.h"
 
-void shallowTree::makeShallowTreeOfTree(tree T) {
+void shallowTree::makeShallowTreeOfTree(tree* T) {
 
     //making the first path starting at dummy node or preorderList[0]
-    path p(T.preOrderList[0]);
-    this->paths.push_back(T.preOrderList[0]);
+    path p(T->preOrderList[0]);
+    this->paths.push_back(T->preOrderList[0]);
 
     //making other path as well and pushing back all of them to the vector paths
-    for (int i = 0; i < T.preOrderList.size(); i++) {
-        if (!T.preOrderList[i]->children.empty()) {
+    for (int i = 0; i < T->preOrderList.size(); i++) {
+        if (!T->preOrderList[i]->children.empty()) {
             continue;
         }
-        this->paths.back()->end = T.preOrderList[i];
+        this->paths.back()->end = T->preOrderList[i];
 
         //set the size of the path
         this->paths.back()->size =
@@ -23,8 +23,8 @@ void shallowTree::makeShallowTreeOfTree(tree T) {
 //        this->paths.back().setPathSize();
 
         //after stting the end of a path if there is still nodes left in the tree we make a new path starting at the next element of preorderList
-        if (i + 1 < T.preOrderList.size()) {
-            this->paths.push_back(T.preOrderList[i + 1]);
+        if (i + 1 < T->preOrderList.size()) {
+            this->paths.push_back(T->preOrderList[i + 1]);
         }
     }
 
@@ -38,7 +38,7 @@ void shallowTree::makeShallowTreeOfTree(tree T) {
     path* temp = this->paths.head;
     while (temp != NULL) {
         for (int j = temp->start->indexInOrderedList; j <= temp->end->indexInOrderedList; j++){
-            T.preOrderList[j]->nodePath = temp;
+            T->preOrderList[j]->nodePath = temp;
         }
         temp = temp->next;
     }
@@ -55,7 +55,7 @@ void shallowTree::makeShallowTreeOfTree(tree T) {
 
     temp = this->paths.head;
     while (temp != NULL) {
-        if (temp->start == T.root) {
+        if (temp->start == T->root) {
             temp->par = NULL;
         } else {
             temp->par = temp->start->par->nodePath;
