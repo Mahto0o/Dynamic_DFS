@@ -5,7 +5,10 @@
 #include "shallowTree.h"
 
 void shallowTree::makeShallowTreeOfTree(tree* T) {
-
+    //empty the path
+    while(this->paths.head != nullptr){
+        this->paths.erase(this->paths.back());
+    }
     //making the first path starting at dummy node or preorderList[0]
     path p(T->preOrderList[0]);
     this->paths.push_back(T->preOrderList[0]);

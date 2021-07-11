@@ -150,7 +150,7 @@ void Toggle(vector<int> inactiveNodes, vector<int> activeNodes, shallowTree *st,
     for (auto &i: inactiveNodes) {
         G->adjList[i].active = false;
     }
-    for(auto &i: activeNodes){
+    for (auto &i: activeNodes) {
         G->adjList[i].active = true;
     }
 }
@@ -165,7 +165,7 @@ void UpdateShallowTree(vector<int> inactiveNodes, vector<int> activeNodes, shall
         //add the node to dfs tree and set the indexInOrderedList
         T->adjList.push_back(&G->adjList[i]);
         T->preOrderList.push_back(&G->adjList[i]);
-        G->adjList[i].indexInOrderedList = T->preOrderList.size()-1;
+//        G->adjList[i].indexInOrderedList = T->preOrderList.size() - 1;
 
 
         //add the node to it's neighbour ReducedAl and vice versa
@@ -210,11 +210,8 @@ void UpdateShallowTree(vector<int> inactiveNodes, vector<int> activeNodes, shall
                 }
             }
             // delete this nodePath G.adjList[i].nodePath
-//            if(startIsSet){
-//                st->paths.back()->end =
-//            }
+
             st->paths.erase(p);
-//            p->~path();
         }
     }
     //set nodePath for all the active nodes
@@ -228,11 +225,7 @@ void UpdateShallowTree(vector<int> inactiveNodes, vector<int> activeNodes, shall
         }
         temp = temp->next;
     }
-//    for (auto &i:st->paths) {
-//        for (int j = i.start->indexInOrderedList; j <= i.end->indexInOrderedList; j++) {
-//            T->preOrderList[j]->nodePath = &i;
-//        }
-//    }
+
     //set the parent for each nodePath in st
     temp = st->paths.head;
     while (temp != nullptr) {
@@ -248,19 +241,53 @@ void UpdateShallowTree(vector<int> inactiveNodes, vector<int> activeNodes, shall
         temp->par = nearestActiveAncestor->nodePath;
         temp = temp->next;
     }
-//    for (auto &i:st->paths) {
-//        node *nearestActiveAncestor = i.start->par;
-//        while (!nearestActiveAncestor->active) {
-//            nearestActiveAncestor = nearestActiveAncestor->par;
-//        }
-//        i.par = nearestActiveAncestor->nodePath;
+    for (auto &i:activeNodes) {
+        T->root->children.push_back(&G->adjList[i]);
+        G->adjList[i].par = T->root;
+        G->adjList[i].children.clear();
+        G->adjList[i].sizeofST = 0;
+    }
+//    T->root->sizeofST = 0;
+//    for (auto &i:T->root->children) {
+//        T->root->sizeofST += i->sizeofST;
 //    }
+    T->ComputeSubtreeSizes(T->root);
 }
+/*
+    for (int t = 0; t < shape[1]; t++) {
+        inactiveNodes.clear();
+        activeNodes.clear();
+        if (t == 0) {
+            for (int i = 0; i < shape[0]; i++){
+                if(matrix[t][i] == 0){
+                    inactiveNodes.push_back(i);
+                }
+            }
+        }
+        else{
+            inactiveNodes.clear();
+            activeNodes.clear();
+            for (int i = 0; i < shape[0]; i++) {
+                if(matrix[t][i] == 1 && matrix[t-1][i] == 0){
+                    activeNodes.push_back(i);
+                }
+                if(matrix[t][i] == 0 && matrix[t-1][i] == 1){
+                    inactiveNodes.push_back(i);
+                }
+            }
+        }
+        G.makeAllNodesUnvisited();
+        T.root->visited = false;
+        T.root->ReducedAL.clear();
+        st.makeShallowTreeOfTree(&T);
+        Toggle(inactiveNodes, activeNodes, &st, &G);
+        UpdateShallowTree(inactiveNodes, activeNodes, &st, &T, &G);
 
-
-
-//void Toggle(vector<bool> NodesStatus, shallowTree st, graph G) {
-//    for(auto &i: G.adjList){
-//        i.active = NodesStatus[i.indx];
-//    }
-//}
+        TStar->adjList.clear();
+        TStar->preOrderList.clear();
+        TStar->root = nullptr;
+        Reroot(T.root, &T, TStar, D, &st);
+        TStar->root = T.root;
+        TStar->ComputePreorderList();
+    }
+ */
