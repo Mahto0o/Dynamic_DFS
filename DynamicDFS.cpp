@@ -165,7 +165,7 @@ void UpdateShallowTree(vector<int> inactiveNodes, vector<int> activeNodes, shall
         //add the node to dfs tree and set the indexInOrderedList
         T->adjList.push_back(&G->adjList[i]);
         T->preOrderList.push_back(&G->adjList[i]);
-//        G->adjList[i].indexInOrderedList = T->preOrderList.size() - 1;
+        G->adjList[i].indexInOrderedList = T->preOrderList.size() - 1;
 
 
         //add the node to it's neighbour ReducedAl and vice versa
@@ -247,11 +247,11 @@ void UpdateShallowTree(vector<int> inactiveNodes, vector<int> activeNodes, shall
         G->adjList[i].children.clear();
         G->adjList[i].sizeofST = 0;
     }
-//    T->root->sizeofST = 0;
-//    for (auto &i:T->root->children) {
-//        T->root->sizeofST += i->sizeofST;
-//    }
-    T->ComputeSubtreeSizes(T->root);
+    T->root->sizeofST = 0;
+    for (auto &i:T->root->children) {
+        T->root->sizeofST += i->sizeofST;
+    }
+//    T->ComputeSubtreeSizes(T->root);
 }
 /*
     for (int t = 0; t < shape[1]; t++) {
