@@ -8,6 +8,7 @@ void dataStructure::computeDs(graph G, tree T) {
 
     for (auto & i : T.preOrderList) {
 //        this->ds.push_back(set<node*, nodeDfnCmp> ());
+        i->dfn = i->indexInOrderedList;
         this->ds.emplace_back();
         for (int j = 0; j < i->neighbours.size(); j++) {
             if (i->neighbours[j]->indexInOrderedList < i->indexInOrderedList) {
@@ -21,14 +22,14 @@ void dataStructure::computeDs(graph G, tree T) {
 node *dataStructure::query(node *x, node *pathStart, node *pathEnd) {
     set<node*, nodeDfnCmp>::iterator itup;
     node* temp;
-    if(this->ds[x->indexInOrderedList].find(pathEnd) != this->ds[x->indexInOrderedList].end()){
+    if(this->ds[x->dfn].find(pathEnd) != this->ds[x->dfn].end()){
         return pathEnd;
     }
-    itup = this->ds[x->indexInOrderedList].upper_bound(pathEnd);
-    if(itup != this->ds[x->indexInOrderedList].end()){
+    itup = this->ds[x->dfn].upper_bound(pathEnd);
+    if(itup != this->ds[x->dfn].end()){
         temp = *itup;
     }
-    if(temp->indexInOrderedList < pathStart->indexInOrderedList){
+    if(temp->dfn < pathStart->dfn){
         return nullptr;
     }
     return temp;

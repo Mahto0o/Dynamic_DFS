@@ -15,8 +15,10 @@ void ComputeReducedAL(node *x, node *y, dataStructure ds, tree *T) {
     node *u;
     miu = T->preOrderList[x->indexInOrderedList]->nodePath->par;   //p.par;
     while (miu != nullptr && miu->start != nullptr && miu->end != nullptr) {
-        for (int i = x->indexInOrderedList; i < y->indexInOrderedList; i++) {
-            T->preOrderList[i]->ReducedAL.insert(ds.query(T->preOrderList[i], miu->start, miu->end));
+        for (int i = x->indexInOrderedList; i <= y->indexInOrderedList; i++) {
+            if(ds.query(T->preOrderList[i], miu->start, miu->end)!= nullptr){
+                T->preOrderList[i]->ReducedAL.insert(ds.query(T->preOrderList[i], miu->start, miu->end));
+            }
         }
         miu = miu->par;
     }
