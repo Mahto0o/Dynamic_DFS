@@ -4,6 +4,14 @@
 
 #include "nodeDfnCmp.h"
 
-bool nodeDfnCmp::operator () (const node *a, const node *b) {
-    return a->indexInOrderedList > b->indexInOrderedList;;
+bool nodeDfnCmp::operator () (const node *a, const node *b) { //(val, element)
+
+    if(b->active){
+        return a->indexInOrderedList <= b->indexInOrderedList;
+    }
+    else{
+        return false;
+    }
+
 }
+

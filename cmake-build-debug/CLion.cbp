@@ -121,6 +121,12 @@
 		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/node.h">
 			<Option target="CLion"/>
 		</Unit>
+		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/nodeCMP.cpp">
+			<Option target="CLion"/>
+		</Unit>
+		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/nodeCMP.h">
+			<Option target="CLion"/>
+		</Unit>
 		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/CLion/nodeDfnCmp.cpp">
 			<Option target="CLion"/>
 		</Unit>

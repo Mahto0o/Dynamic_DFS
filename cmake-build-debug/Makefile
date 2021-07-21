@@ -331,6 +331,33 @@ node.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CLion.dir/build.make CMakeFiles/CLion.dir/node.cpp.s
 .PHONY : node.cpp.s
 
+nodeCMP.o: nodeCMP.cpp.o
+
+.PHONY : nodeCMP.o
+
+# target to build an object file
+nodeCMP.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CLion.dir/build.make CMakeFiles/CLion.dir/nodeCMP.cpp.o
+.PHONY : nodeCMP.cpp.o
+
+nodeCMP.i: nodeCMP.cpp.i
+
+.PHONY : nodeCMP.i
+
+# target to preprocess a source file
+nodeCMP.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CLion.dir/build.make CMakeFiles/CLion.dir/nodeCMP.cpp.i
+.PHONY : nodeCMP.cpp.i
+
+nodeCMP.s: nodeCMP.cpp.s
+
+.PHONY : nodeCMP.s
+
+# target to generate assembly for a file
+nodeCMP.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/CLion.dir/build.make CMakeFiles/CLion.dir/nodeCMP.cpp.s
+.PHONY : nodeCMP.cpp.s
+
 nodeDfnCmp.o: nodeDfnCmp.cpp.o
 
 .PHONY : nodeDfnCmp.o
@@ -469,6 +496,9 @@ help:
 	@echo "... node.o"
 	@echo "... node.i"
 	@echo "... node.s"
+	@echo "... nodeCMP.o"
+	@echo "... nodeCMP.i"
+	@echo "... nodeCMP.s"
 	@echo "... nodeDfnCmp.o"
 	@echo "... nodeDfnCmp.i"
 	@echo "... nodeDfnCmp.s"

@@ -15,7 +15,7 @@ void graph::readGraph(string fileName) {
     ifstream ifs;
     ifs.open(fileName);
 
-    int x, numOfNodes, curNode, curNodeNeighb;
+    int x=0, numOfNodes, curNode, curNodeNeighb;
     string line;
     if (!ifs) {
         cerr << "Unable to open file datafile.txt";
@@ -24,8 +24,24 @@ void graph::readGraph(string fileName) {
 
     stringstream s;
     getline(ifs, line);
-    s << line;
-    s >> numOfNodes;
+    getline(ifs, line);
+    getline(ifs, line);
+    node nd;
+    while (getline(ifs, line)) {
+        s = stringstream();
+        s << line;
+        s >> curNode;
+        x++;
+
+    }
+    ifs.clear();
+    ifs.seekg(0);
+
+
+//    getline(ifs, line);
+//    s << line;
+//    s >> numOfNodes;
+    numOfNodes = x;
     node n[numOfNodes];
     for (int i = 0; i < numOfNodes; i++) {
         this->adjList.push_back(n[i]);
@@ -41,9 +57,10 @@ void graph::readGraph(string fileName) {
         adjList[curNode].indx = curNode;
         while (s >> curNodeNeighb) {
             adjList[curNode].neighbours.push_back(&adjList[curNodeNeighb]);
+            adjList[curNodeNeighb].neighbours.push_back(&adjList[curNode]);
         }
     }
-
+    // new reaed
     ifs.close();
 }
 

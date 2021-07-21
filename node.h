@@ -7,15 +7,17 @@
 #include <string>
 #include <set>
 #include "path.h"
+#include "nodeCMP.h"
 using namespace std;
 class path;
+
 class node {
 public:
     vector<node *> neighbours;
     vector<node *> children;// for tree
     node *par = NULL;// for tree
     vector<node* > cpNbrs;// extra neighbours list for DFS
-    set<node* > ReducedAL;
+    std::set<node*, nodeRLCMP> ReducedAL;
 //    string attr; //tree or path
     int sizeofST = 1;
     int indexInOrderedList;// dfn(x) in current tree

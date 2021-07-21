@@ -3,6 +3,7 @@
 //
 
 #include "dataStructure.h"
+#include "DynamicDFS.h"
 
 void dataStructure::computeDs(graph G, tree T) {
 
@@ -11,25 +12,26 @@ void dataStructure::computeDs(graph G, tree T) {
         i->dfn = i->indexInOrderedList;
         this->ds.emplace_back();
         for (int j = 0; j < i->neighbours.size(); j++) {
-            if (i->neighbours[j]->indexInOrderedList < i->indexInOrderedList) {
+//            if (i->neighbours[j]->indexInOrderedList < i->indexInOrderedList) {
                 this->ds.back().insert(i->neighbours[j]);
-            }
+//            }
         }
     }
 
 }
 
 node *dataStructure::query(node *x, node *pathStart, node *pathEnd) {
-    set<node*, nodeDfnCmp>::iterator itup;
+//    set<node*, decltype(nodeCMP)*>::iterator itup;
     node* temp;
-    if(this->ds[x->dfn].find(pathEnd) != this->ds[x->dfn].end()){
-        return pathEnd;
-    }
-    itup = this->ds[x->dfn].upper_bound(pathEnd);
+    auto itup = this->ds[x->dfn].lower_bound(pathEnd);
+//    auto itup = this->ds[x->dfn].upper_bound(pathEnd);
     if(itup != this->ds[x->dfn].end()){
         temp = *itup;
     }
-    if(temp->dfn < pathStart->dfn){
+    else{
+        return nullptr;
+    }
+    if(temp->indexInOrderedList < pathStart->indexInOrderedList){
         return nullptr;
     }
     return temp;

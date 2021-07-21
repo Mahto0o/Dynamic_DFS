@@ -8,6 +8,7 @@ CMakeFiles/CLion.dir/DynamicDFS.cpp.o
  /Users/mahtashafieesabet/Desktop/codes/CLion/graph.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/linkedList.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/node.h
+ /Users/mahtashafieesabet/Desktop/codes/CLion/nodeCMP.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/nodeDfnCmp.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/path.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/shallowTree.h
@@ -17,26 +18,33 @@ CMakeFiles/CLion.dir/SegmentTree.cpp.o
  /Users/mahtashafieesabet/Desktop/codes/CLion/SegmentTree.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/graph.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/node.h
+ /Users/mahtashafieesabet/Desktop/codes/CLion/nodeCMP.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/path.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/tree.h
 CMakeFiles/CLion.dir/dataStructure.cpp.o
+ /Users/mahtashafieesabet/Desktop/codes/CLion/DynamicDFS.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/dataStructure.cpp
  /Users/mahtashafieesabet/Desktop/codes/CLion/dataStructure.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/graph.h
+ /Users/mahtashafieesabet/Desktop/codes/CLion/linkedList.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/node.h
+ /Users/mahtashafieesabet/Desktop/codes/CLion/nodeCMP.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/nodeDfnCmp.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/path.h
+ /Users/mahtashafieesabet/Desktop/codes/CLion/shallowTree.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/tree.h
 CMakeFiles/CLion.dir/graph.cpp.o
  /Users/mahtashafieesabet/Desktop/codes/CLion/graph.cpp
  /Users/mahtashafieesabet/Desktop/codes/CLion/graph.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/node.h
+ /Users/mahtashafieesabet/Desktop/codes/CLion/nodeCMP.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/path.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/tree.h
 CMakeFiles/CLion.dir/linkedList.cpp.o
  /Users/mahtashafieesabet/Desktop/codes/CLion/linkedList.cpp
  /Users/mahtashafieesabet/Desktop/codes/CLion/linkedList.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/node.h
+ /Users/mahtashafieesabet/Desktop/codes/CLion/nodeCMP.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/path.h
 CMakeFiles/CLion.dir/main.cpp.o
  /Users/mahtashafieesabet/Desktop/codes/CLion/DynamicDFS.h
@@ -45,6 +53,7 @@ CMakeFiles/CLion.dir/main.cpp.o
  /Users/mahtashafieesabet/Desktop/codes/CLion/linkedList.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/main.cpp
  /Users/mahtashafieesabet/Desktop/codes/CLion/node.h
+ /Users/mahtashafieesabet/Desktop/codes/CLion/nodeCMP.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/nodeDfnCmp.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/npy.hpp
  /Users/mahtashafieesabet/Desktop/codes/CLion/path.h
@@ -53,19 +62,28 @@ CMakeFiles/CLion.dir/main.cpp.o
 CMakeFiles/CLion.dir/node.cpp.o
  /Users/mahtashafieesabet/Desktop/codes/CLion/node.cpp
  /Users/mahtashafieesabet/Desktop/codes/CLion/node.h
+ /Users/mahtashafieesabet/Desktop/codes/CLion/nodeCMP.h
+ /Users/mahtashafieesabet/Desktop/codes/CLion/path.h
+CMakeFiles/CLion.dir/nodeCMP.cpp.o
+ /Users/mahtashafieesabet/Desktop/codes/CLion/node.h
+ /Users/mahtashafieesabet/Desktop/codes/CLion/nodeCMP.cpp
+ /Users/mahtashafieesabet/Desktop/codes/CLion/nodeCMP.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/path.h
 CMakeFiles/CLion.dir/nodeDfnCmp.cpp.o
  /Users/mahtashafieesabet/Desktop/codes/CLion/node.h
+ /Users/mahtashafieesabet/Desktop/codes/CLion/nodeCMP.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/nodeDfnCmp.cpp
  /Users/mahtashafieesabet/Desktop/codes/CLion/nodeDfnCmp.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/path.h
 CMakeFiles/CLion.dir/path.cpp.o
  /Users/mahtashafieesabet/Desktop/codes/CLion/node.h
+ /Users/mahtashafieesabet/Desktop/codes/CLion/nodeCMP.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/path.cpp
  /Users/mahtashafieesabet/Desktop/codes/CLion/path.h
 CMakeFiles/CLion.dir/shallowTree.cpp.o
  /Users/mahtashafieesabet/Desktop/codes/CLion/linkedList.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/node.h
+ /Users/mahtashafieesabet/Desktop/codes/CLion/nodeCMP.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/path.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/shallowTree.cpp
  /Users/mahtashafieesabet/Desktop/codes/CLion/shallowTree.h
@@ -76,6 +94,7 @@ CMakeFiles/CLion.dir/tree.cpp.o
  /Users/mahtashafieesabet/Desktop/codes/CLion/graph.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/linkedList.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/node.h
+ /Users/mahtashafieesabet/Desktop/codes/CLion/nodeCMP.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/nodeDfnCmp.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/path.h
  /Users/mahtashafieesabet/Desktop/codes/CLion/shallowTree.h

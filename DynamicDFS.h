@@ -13,7 +13,7 @@
 
 
 
-void ComputeReducedAL(node* x, node* y, dataStructure ds, tree* T);
+void ComputeReducedAL(node* x, node* y, dataStructure ds, tree* T, shallowTree *st);
 
 void Reroot(node* x, tree *T, tree* Tstar, dataStructure ds, shallowTree *st);
 
