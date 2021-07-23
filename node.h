@@ -14,8 +14,10 @@ class path;
 class node {
 public:
     vector<node *> neighbours;
-    vector<node *> children;// for tree
+    vector<node *> children;// for tree (original dfs tree)
+    vector<node *> childreni;// for i'th dfs tree
     node *par = NULL;// for tree
+    node* pari = NULL;
     vector<node* > cpNbrs;// extra neighbours list for DFS
     std::set<node*, nodeRLCMP> ReducedAL;
 //    string attr; //tree or path

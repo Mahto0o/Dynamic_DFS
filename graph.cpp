@@ -116,6 +116,7 @@ tree graph::ComputeDFSTree() {
 void graph::makeAllNodesUnvisited() {
     for(auto &i: this->adjList){
         i.visited = false;
+        i.active = true;
         i.ReducedAL.clear();
     }
 }

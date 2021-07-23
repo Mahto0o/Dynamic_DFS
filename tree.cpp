@@ -5,6 +5,7 @@
 #include <stack>
 #include "DynamicDFS.h"
 #include "tree.h"
+#include <algorithm>
 
 using namespace std;
 //bool myNodeCF(node *a, node *b) {

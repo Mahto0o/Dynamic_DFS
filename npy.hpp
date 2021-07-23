@@ -586,6 +586,7 @@ namespace npy {
     {
         std::ifstream stream(filename, std::ifstream::binary);
         if(!stream) {
+            cerr << "Error: " << strerror(errno);
             throw std::runtime_error("io error: failed to open a file.");
         }
 

@@ -6,7 +6,7 @@
 bool nodeCMP (const node *a, const node *b) { //(val, element)
 
     if(b->active){
-        return a->indexInOrderedList > b->indexInOrderedList;
+        return a->dfn > b->dfn;
     }
     else{
         return false;

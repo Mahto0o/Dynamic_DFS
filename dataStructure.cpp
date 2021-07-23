@@ -12,9 +12,9 @@ void dataStructure::computeDs(graph G, tree T) {
         i->dfn = i->indexInOrderedList;
         this->ds.emplace_back();
         for (int j = 0; j < i->neighbours.size(); j++) {
-//            if (i->neighbours[j]->indexInOrderedList < i->indexInOrderedList) {
+            if (i->neighbours[j]->indexInOrderedList < i->indexInOrderedList) {
                 this->ds.back().insert(i->neighbours[j]);
-//            }
+            }
         }
     }
 
@@ -31,7 +31,7 @@ node *dataStructure::query(node *x, node *pathStart, node *pathEnd) {
     else{
         return nullptr;
     }
-    if(temp->indexInOrderedList < pathStart->indexInOrderedList){
+    if(temp->dfn < pathStart->dfn){
         return nullptr;
     }
     return temp;

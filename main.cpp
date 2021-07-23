@@ -9,9 +9,9 @@
 
 using namespace std;
 using namespace std::chrono;
-#define X   "/Users/mahtashafieesabet/Desktop/codes/pythonproject/GRAPH_SW_N11_E22_P0.5_K4_T/"
+#define X   "/home/sabetm/Desktop/project/GRAPH_SW_N11_E22_P0.5_K4_T/"
 #define FILENAME   X"Graph.txt"
-#define INPUTMATRIX X"data/07-13--23-45-34-DENSITY0.55_TS10_input.npy"
+#define INPUTMATRIX X"Data/07-13--23-45-34-DENSITY0.55_TS10_input.npy"
 
 //#define INPUTMATRIX "/Users/mahtashafieesabet/Desktop/codes/pythonproject/GRAPH_SW_N15_E30_P0.5_K4_T/data/07-13--23-52-08-DENSITY0.55_TS10_input.npy"
 
@@ -76,53 +76,27 @@ int main() {
     tree *TStar = new tree();
     for (int t = 0; t < shape[1]; t++) {
         inactiveNodes.clear();
-        activeNodes.clear();
-        if (t == 0) {
-            for (int i = 0; i < shape[0]; i++) {
-                if (matrix[t][i] == 0) {
-                    inactiveNodes.push_back(i);
-                }
-            }
-        } else {
-            inactiveNodes.clear();
-            activeNodes.clear();
-            for (int i = 0; i < shape[0]; i++) {
-                if (matrix[t][i] == 1 && matrix[t - 1][i] == 0) {
-                    activeNodes.push_back(i);
-                }
-                if (matrix[t][i] == 0 && matrix[t - 1][i] == 1) {
-                    inactiveNodes.push_back(i);
-                }
+
+        for (int i = 0; i < shape[0]; i++) {
+            if (matrix[t][i] == 0) {
+                inactiveNodes.push_back(i);
             }
         }
+
         G.makeAllNodesUnvisited();
-        if (t % 2 == 0) {
-            T.root->visited = false;
-            T.root->ReducedAL.clear();
-            st.makeShallowTreeOfTree(&T);
-            Toggle(inactiveNodes, activeNodes, &st, &G);
-            UpdateShallowTree(inactiveNodes, activeNodes, &st, &T, &G);
 
-            TStar->adjList.clear();
-            TStar->preOrderList.clear();
-            TStar->root = nullptr;
-            Reroot(T.root, &T, TStar, D, &st);
-            TStar->root = T.root;
-            TStar->ComputePreorderList();
-        } else {
-            TStar->root->visited = false;
-            TStar->root->ReducedAL.clear();
-            st.makeShallowTreeOfTree(TStar);
-            Toggle(inactiveNodes, activeNodes, &st, &G);
-            UpdateShallowTree(inactiveNodes, activeNodes, &st, TStar, &G);
+        T.root->visited = false;
+        T.root->ReducedAL.clear();
+        st.makeShallowTreeOfTree(&T);
+        Toggle(inactiveNodes, activeNodes, &st, &G);
+        UpdateShallowTree(inactiveNodes, activeNodes, &st, &T, &G);
 
-            T.adjList.clear();
-            T.preOrderList.clear();
-            T.root = nullptr;
-            Reroot(TStar->root, TStar, &T, D, &st);
-            T.root = TStar->root;
-            T.ComputePreorderList();
-        }
+        TStar->adjList.clear();
+        TStar->preOrderList.clear();
+        TStar->root = nullptr;
+        Reroot(T.root, &T, TStar, D, &st);
+        TStar->root = T.root;
+//        TStar->ComputePreorderList();
 
     }
     auto stop = high_resolution_clock::now();
@@ -130,76 +104,48 @@ int main() {
     cout << duration.count() << endl;
 
     //DFS
-    start = high_resolution_clock::now();
-
-    G.readGraph(FILENAME);
-
-    T = G.ComputeDFSTree();
-    npy::LoadArrayFromNumpy(INPUTMATRIX, shape, fortran_order, data);
-    matrix.clear();
-    for (int i = 0; i < shape[1]; i++) { //10
-        vector<bool> v1;
-        for (int j = 0; j < shape[0]; j++) {//15
-            v1.push_back(data[j * 10 + i]);
-        }
-        matrix.push_back(v1);
-    }
-    for (int t = 0; t < shape[1]; t++){
-        inactiveNodes.clear();
-        activeNodes.clear();
-        if (t == 0) {
-            for (int i = 0; i < shape[0]; i++) {
-                if (matrix[t][i] == 0) {
-                    inactiveNodes.push_back(i);
-                }
-            }
-        } else {
-            inactiveNodes.clear();
-            activeNodes.clear();
-            for (int i = 0; i < shape[0]; i++) {
-                if (matrix[t][i] == 1 && matrix[t - 1][i] == 0) {
-                    activeNodes.push_back(i);
-                }
-                if (matrix[t][i] == 0 && matrix[t - 1][i] == 1) {
-                    inactiveNodes.push_back(i);
-                }
-            }
-        }
-        G.makeAllNodesUnvisited();
-        T.root->visited = false;
-        T.root->ReducedAL.clear();
-        Toggle(inactiveNodes, activeNodes, &st, &G);
-        T = G.ComputeDFSTree();
-    }
-    stop = high_resolution_clock::now();
-    cout << duration.count() << endl;
-//    inactiveNodes.push_back(2);
-//    inactiveNodes.push_back(3);
-//    inactiveNodes.push_back(8);
-
-//    G.makeAllNodesUnvisited();
-//    Toggle(inactiveNodes, activeNodes, &st, &G);
-//    UpdateShallowTree(inactiveNodes, activeNodes, &st, &T, &G);
-//    tree *Tsrar = new tree();
-//    Reroot(T.root, &T, TStar, D, &st);
-//    TStar->root = T.root;
-//    TStar->ComputePreorderList();
-//    inactiveNodes.clear();
-//    inactiveNodes.push_back(7);
-//    inactiveNodes.push_back(9);
-//    inactiveNodes.push_back(1);
-//    activeNodes.push_back(3);
-//    G.makeAllNodesUnvisited();
-//    TStar->root->visited = false;
-//    TStar->root->ReducedAL.clear();
-//    st.makeShallowTreeOfTree(TStar);
-//    Toggle(inactiveNodes, activeNodes, &st, &G);
-//    UpdateShallowTree(inactiveNodes, activeNodes, &st, TStar, &G);
-//    T.adjList.clear();
-//    T.preOrderList.clear();
-//    T.root = nullptr;
-//    Reroot(TStar->root, TStar, &T, D, &st);
-//    T.root = TStar->root;
-//    T.ComputePreorderList();
+//    start = high_resolution_clock::now();
+//
+//    G.readGraph(FILENAME);
+//
+//    T = G.ComputeDFSTree();
+//    npy::LoadArrayFromNumpy(INPUTMATRIX, shape, fortran_order, data);
+//    matrix.clear();
+//    for (int i = 0; i < shape[1]; i++) { //10
+//        vector<bool> v1;
+//        for (int j = 0; j < shape[0]; j++) {//15
+//            v1.push_back(data[j * 10 + i]);
+//        }
+//        matrix.push_back(v1);
+//    }
+//    for (int t = 0; t < shape[1]; t++){
+//        inactiveNodes.clear();
+//        activeNodes.clear();
+//        if (t == 0) {
+//            for (int i = 0; i < shape[0]; i++) {
+//                if (matrix[t][i] == 0) {
+//                    inactiveNodes.push_back(i);
+//                }
+//            }
+//        } else {
+//            inactiveNodes.clear();
+//            activeNodes.clear();
+//            for (int i = 0; i < shape[0]; i++) {
+//                if (matrix[t][i] == 1 && matrix[t - 1][i] == 0) {
+//                    activeNodes.push_back(i);
+//                }
+//                if (matrix[t][i] == 0 && matrix[t - 1][i] == 1) {
+//                    inactiveNodes.push_back(i);
+//                }
+//            }
+//        }
+//        G.makeAllNodesUnvisited();
+//        T.root->visited = false;
+//        T.root->ReducedAL.clear();
+//        Toggle(inactiveNodes, activeNodes, &st, &G);
+//        T = G.ComputeDFSTree();
+//    }
+//    stop = high_resolution_clock::now();
+//    cout << duration.count() << endl;
     return 0;
 }
