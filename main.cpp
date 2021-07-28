@@ -9,13 +9,17 @@
 
 using namespace std;
 using namespace std::chrono;
-#define X   "/home/sabetm/Desktop/project/GRAPH_SW_N11_E22_P0.5_K4_T/"
+#define X   "/Users/mahtashafieesabet/Desktop/codes/pythonproject/datasets/GRAPH_SW_N100_E400_P0.1_K8_T/"
 #define FILENAME   X"Graph.txt"
-#define INPUTMATRIX X"Data/07-13--23-45-34-DENSITY0.55_TS10_input.npy"
+#define INPUTMATRIX X"Data/07-25--19-15-03-DENSITY0.1_TS10000_input.npy"
 
-//#define INPUTMATRIX "/Users/mahtashafieesabet/Desktop/codes/pythonproject/GRAPH_SW_N15_E30_P0.5_K4_T/data/07-13--23-52-08-DENSITY0.55_TS10_input.npy"
+//#define INPUTMATRIX "/Users/mahtashafieesabet/Desktop/codes/pythonproject/GRAPH_SW_N11_E22_P0.5_K4_T/data/07-13--23-52-08-DENSITY0.55_TS10_input.npy"
 
 int main() {
+    using std::chrono::high_resolution_clock;
+    using std::chrono::duration_cast;
+    using std::chrono::duration;
+    using std::chrono::milliseconds;
 //    cout << "Hello, World!" << std::endl;
     auto start = high_resolution_clock::now();
     graph G;
@@ -39,6 +43,7 @@ int main() {
 //    for (int i = 0; i < T.preOrderList.size(); i++) {
 //        cout << T.preOrderList[i]->indx << " dfn:" << i << " " << T.preOrderList[i]->indexInOrderedList << "\n";
 //    }
+//    auto durationf;
     shallowTree st;
     st.makeShallowTreeOfTree(&T);
     dataStructure D;
@@ -52,9 +57,9 @@ int main() {
 //        cout<<endl;
 //    }
 
-    auto itup = D.ds[8].lower_bound(&G.adjList[2]);
-    node* temp ;
-    temp = *itup;
+//    auto itup = D.ds[8].lower_bound(&G.adjList[2]);
+//    node* temp ;
+//    temp = *itup;
 //    cout <<"hello:"<<T.preOrderList[8]->indx<<":"<< D.query(T.preOrderList[12], T.preOrderList[13], T.preOrderList[13])->indx << endl;
 //    cout << D.query(T.preOrderList[5], st.paths[0].start, st.paths[0].start)->indx;
 
@@ -87,65 +92,69 @@ int main() {
 
         T.root->visited = false;
         T.root->ReducedAL.clear();
+        auto s1 = high_resolution_clock::now();
         st.makeShallowTreeOfTree(&T);
+        auto st1 = high_resolution_clock::now();
+        auto durationf = duration_cast<microseconds>(st1 - s1);
+//        cout << "make st:" << durationf.count() << endl;
+        s1 = high_resolution_clock::now();
         Toggle(inactiveNodes, activeNodes, &st, &G);
+        st1 = high_resolution_clock::now();
+        durationf = duration_cast<microseconds>(st1 - s1);
+//        cout << "tpggle st:" << durationf.count() << endl;
+        s1 = high_resolution_clock::now();
         UpdateShallowTree(inactiveNodes, activeNodes, &st, &T, &G);
-
+        st1 = high_resolution_clock::now();
+        durationf = duration_cast<microseconds>(st1 - s1);
+//        cout << "update st st:" << durationf.count() << endl;
         TStar->adjList.clear();
         TStar->preOrderList.clear();
         TStar->root = nullptr;
+        s1 = high_resolution_clock::now();
         Reroot(T.root, &T, TStar, D, &st);
+        st1 = high_resolution_clock::now();
+        durationf = duration_cast<microseconds>(st1 - s1);
+//        cout << "Reroot st st:" << durationf.count() << endl;
         TStar->root = T.root;
 //        TStar->ComputePreorderList();
 
     }
     auto stop = high_resolution_clock::now();
-    auto duration = duration_cast<microseconds>(stop - start);
-    cout << duration.count() << endl;
+    auto durationf = duration_cast<microseconds>(stop - start);
+    cout << durationf.count() << endl;
 
     //DFS
-//    start = high_resolution_clock::now();
-//
+    start = high_resolution_clock::now();
+
 //    G.readGraph(FILENAME);
-//
-//    T = G.ComputeDFSTree();
-//    npy::LoadArrayFromNumpy(INPUTMATRIX, shape, fortran_order, data);
-//    matrix.clear();
-//    for (int i = 0; i < shape[1]; i++) { //10
-//        vector<bool> v1;
-//        for (int j = 0; j < shape[0]; j++) {//15
-//            v1.push_back(data[j * 10 + i]);
-//        }
-//        matrix.push_back(v1);
-//    }
-//    for (int t = 0; t < shape[1]; t++){
-//        inactiveNodes.clear();
-//        activeNodes.clear();
-//        if (t == 0) {
-//            for (int i = 0; i < shape[0]; i++) {
-//                if (matrix[t][i] == 0) {
-//                    inactiveNodes.push_back(i);
-//                }
-//            }
-//        } else {
-//            inactiveNodes.clear();
-//            activeNodes.clear();
-//            for (int i = 0; i < shape[0]; i++) {
-//                if (matrix[t][i] == 1 && matrix[t - 1][i] == 0) {
-//                    activeNodes.push_back(i);
-//                }
-//                if (matrix[t][i] == 0 && matrix[t - 1][i] == 1) {
-//                    inactiveNodes.push_back(i);
-//                }
-//            }
-//        }
-//        G.makeAllNodesUnvisited();
-//        T.root->visited = false;
-//        T.root->ReducedAL.clear();
-//        Toggle(inactiveNodes, activeNodes, &st, &G);
-//        T = G.ComputeDFSTree();
-//    }
-//    stop = high_resolution_clock::now();
-//    cout << duration.count() << endl;
+
+    T = G.ComputeDFSTree();
+    npy::LoadArrayFromNumpy(INPUTMATRIX, shape, fortran_order, data);
+    matrix.clear();
+    for (int i = 0; i < shape[1]; i++) { //10
+        vector<bool> v1;
+        for (int j = 0; j < shape[0]; j++) {//15
+            v1.push_back(data[j * 10 + i]);
+        }
+        matrix.push_back(v1);
+    }
+    for (int t = 0; t < shape[1]; t++){
+        inactiveNodes.clear();
+        activeNodes.clear();
+        for (int i = 0; i < shape[0]; i++) {
+            if (matrix[t][i] == 0) {
+                inactiveNodes.push_back(i);
+            }
+        }
+        G.makeAllNodesUnvisited();
+        T.root->visited = false;
+        T.root->ReducedAL.clear();
+        Toggle(inactiveNodes, activeNodes, &st, &G);
+        T = G.ComputeDFSTreeBetweenActiveNodes();
+    }
+
+    stop = high_resolution_clock::now();
+    durationf = duration_cast<microseconds>(stop - start);
+    cout << durationf.count() << endl;
     return 0;
 }

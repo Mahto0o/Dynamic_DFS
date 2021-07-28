@@ -18,6 +18,7 @@ public:
     void printGraph();
     tree ComputeDFSTree();
     void makeAllNodesUnvisited();
+    tree ComputeDFSTreeBetweenActiveNodes();
 
 };
 

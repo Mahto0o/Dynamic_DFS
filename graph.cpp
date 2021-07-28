@@ -77,10 +77,12 @@ void graph::printGraph() {
 tree graph::ComputeDFSTree() {
     node *dummyNode;
     dummyNode = &this->dummyNode;
+    dummyNode->children.clear();
     for (auto &i : this->adjList) {
         i.neighbours.push_back(dummyNode);//connecting dummy node to all vertices
         i.cpNbrs = i.neighbours;
         i.visited = false;
+        i.children.clear();
         dummyNode->neighbours.push_back(&i);
     }
     dummyNode->cpNbrs = dummyNode->neighbours;
@@ -119,4 +121,45 @@ void graph::makeAllNodesUnvisited() {
         i.active = true;
         i.ReducedAL.clear();
     }
+}
+tree graph::ComputeDFSTreeBetweenActiveNodes() {
+    node *dummyNode;
+    dummyNode = &this->dummyNode;
+    dummyNode->children.clear();
+    for (auto &i : this->adjList) {
+        i.neighbours.push_back(dummyNode);//connecting dummy node to all vertices
+        i.cpNbrs = i.neighbours;
+        i.visited = false;
+        i.children.clear();
+        if(i.active)
+            dummyNode->neighbours.push_back(&i);
+    }
+    dummyNode->cpNbrs = dummyNode->neighbours;
+    tree T;
+
+    node *stack_top, *stack_top_rnd_nbr;
+    stack<node *> s;
+    s.push(dummyNode);
+    dummyNode->visited = true;
+    T.root = dummyNode;
+
+    while (!s.empty()) {
+        stack_top = s.top();
+        if (stack_top->cpNbrs.empty()) {
+            s.pop();
+        } else {
+            stack_top_rnd_nbr = stack_top->cpNbrs.back();
+            stack_top->cpNbrs.pop_back();
+            if (!stack_top_rnd_nbr->visited && stack_top_rnd_nbr->active) {// if u's visited is unvisited add it to the DFS tree
+                T.adjList.push_back(stack_top_rnd_nbr);
+                stack_top_rnd_nbr->par = stack_top;
+                stack_top->children.push_back(stack_top_rnd_nbr);
+                stack_top_rnd_nbr->visited = true;
+                s.push(stack_top_rnd_nbr);
+            }
+        }
+    }
+//    T.adjList.push_back(T.root);
+//    T.ComputeSubtreeSizes(T.root);
+    return T;
 }
