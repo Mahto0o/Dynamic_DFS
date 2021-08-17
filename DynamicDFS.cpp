@@ -3,12 +3,19 @@
 //
 #include "DynamicDFS.h"
 #include <iostream>
+#include <chrono>
+
+using namespace std::chrono;
+using namespace std;
 
 bool myNodeCF(node *a, node *b) {
     return (a->sizeofST < b->sizeofST);
 }
 
 void ComputeReducedAL(node *x, node *y, dataStructure ds, tree *T, shallowTree *st) {
+    static int count = 1;
+    count++;
+//    cout << "CmpReducedAL() is called " << count << " times" << endl;
     path *miu;
     node *z;
     node *w;
@@ -16,8 +23,10 @@ void ComputeReducedAL(node *x, node *y, dataStructure ds, tree *T, shallowTree *
     miu = T->preOrderList[x->dfn]->nodePath->par;   //p.par;
     while (miu != nullptr && miu->start != nullptr && miu->end != nullptr) {
         for (int i = x->dfn; i <= y->dfn; i++) {
-            if(ds.query(T->preOrderList[i], miu->start, miu->end)!= nullptr){
-                T->preOrderList[i]->ReducedAL.insert(ds.query(T->preOrderList[i], miu->start, miu->end));
+
+            w = ds.query(T->preOrderList[i], miu->start, miu->end);
+            if (w != nullptr) {
+                T->preOrderList[i]->ReducedAL.insert(w);
             }
         }
         miu = miu->par;
@@ -26,140 +35,162 @@ void ComputeReducedAL(node *x, node *y, dataStructure ds, tree *T, shallowTree *
     // C = descT(z) \ {v(dfn(x)), ..., v(dfn(y))}
     for (int i = y->dfn + 1; i < x->dfn + x->sizeofST; i++) { //2 to 10
         u = T->preOrderList[i];
-        w = ds.query(u, x, y);
-        if (w != nullptr && u->active) {
-            w->ReducedAL.insert(u);
+        if (u->active && !u->visited) {
+            auto start = high_resolution_clock::now();
+            w = ds.query(u, x, y);
+            auto stp = high_resolution_clock::now();
+            auto durationpre = duration_cast<microseconds>(stp - start);
+//            cout << durationpre.count();
+            if (w != nullptr) {
+                w->ReducedAL.insert(u);
+            }
         }
     }
-
-//    path *temp = st->paths.head;
-//    while (temp != nullptr) {
-//        if(temp->par == x->nodePath){
-//            for (int i = temp->start->indexInOrderedList; i <= temp->end->indexInOrderedList; i++) {
-//                u = T->preOrderList[i];
-//                if(!u->active){
-//                    continue;
-//                }
-//                w = ds.query(u, x, y);
-//                if (w != nullptr) {
-//                    w->ReducedAL.insert(u);
-//                }
-//            }
-//        }
-//        temp = temp->next;
-//    }
-
-
 }
 
 void Reroot(node *x, tree *T, tree *Tstar, dataStructure ds, shallowTree *st) {
-    bool startIsfurthur;
+
+    static int count = 1;
+    count++;
+//    cout << "Reroot() is called " << count << " times" << endl;
     // handle node insertion
+    int start, end, endp;
+    int inc;
+    bool startIsFurthur;
     int startdfn = x->nodePath->start->indexInOrderedList;
     int enddfn = x->nodePath->end->indexInOrderedList;
     if (x->indexInOrderedList - startdfn >= enddfn - x->indexInOrderedList) {
-        startIsfurthur = true;
+        start = x->indexInOrderedList - 1;
+        end = startdfn;
+        inc = 1;
+        startIsFurthur = true;
+        endp = x->indexInOrderedList;
+    } else {
+        start = x->indexInOrderedList + 1;
+        end = enddfn;
+        inc = -1;
+        startIsFurthur = false;
+        endp = end;
+    }
 
-        // attach path (x.nodepath.start, x) to Tstar
-        for (int i = x->indexInOrderedList - 1; i >= startdfn; i--) {
-            if (i == x->indexInOrderedList - 1 && Tstar->adjList.empty()) {
-                //add the node to Tstar
-                Tstar->adjList.push_back(T->preOrderList[i + 1]);
-                T->preOrderList[i + 1]->childreni.clear();
-            }
+
+    // attach path (x.nodepath.start, x) to Tstar
+    for (int i = start; startIsFurthur && (i >= end) || !startIsFurthur && (i <= end); i -= inc) {
+        if (i == start && Tstar->adjList.empty()) {
             //add the node to Tstar
-            Tstar->adjList.push_back(T->preOrderList[i]);
-            // set the node parent
-            T->preOrderList[i]->pari = T->preOrderList[i + 1];
-            T->preOrderList[i + 1]->childreni.push_back(T->preOrderList[i]);
-            // set the node children
-            T->preOrderList[i]->childreni.clear();
+            Tstar->adjList.push_back(T->preOrderList[i + 1 * (inc)]);
+            T->preOrderList[i + 1 * (inc)]->childreni.clear();
         }
-        if (x->indexInOrderedList == startdfn && Tstar->adjList.empty()) {
-            Tstar->adjList.push_back(T->preOrderList[x->indexInOrderedList]);
-            T->preOrderList[x->indexInOrderedList]->childreni.clear();
-        }
+        //add the node to Tstar
+        Tstar->adjList.push_back(T->preOrderList[i]);
+        // set the node parent
+        T->preOrderList[i]->pari = T->preOrderList[i + 1 * (inc)];
+        T->preOrderList[i + 1 * (inc)]->childreni.push_back(T->preOrderList[i]);
+        // clear the node children
+        T->preOrderList[i]->childreni.clear();
+    }
 
-        //Update RAL(L) for vertices on the path (x.nodepath.start, x)
+    if (x->indexInOrderedList == startdfn && Tstar->adjList.empty()) {
+        Tstar->adjList.push_back(T->preOrderList[x->indexInOrderedList]);
+        T->preOrderList[x->indexInOrderedList]->childreni.clear();
+    }
+
+    auto strt = std::chrono::high_resolution_clock::now();
+    //Update RAL(L) for vertices on the path (x.nodepath.start, x)
+    if (startIsFurthur) {
         ComputeReducedAL(x->nodePath->start, x, ds, T, st);
+    } else {
+        ComputeReducedAL(x, x->nodePath->end, ds, T, st);
+    }
+    auto stp = std::chrono::high_resolution_clock::now();
+    auto duration = duration_cast<std::chrono::microseconds>(stp - strt);
+//    cout << duration.count() << endl;
 
-        // add untraversed path to paths
-        if (x != x->nodePath->end) {
+    // add untraversed path to paths
+    if ((x != x->nodePath->end) && startIsFurthur || (x != x->nodePath->start) && !startIsFurthur) {
+        if (startIsFurthur) {
             x->nodePath->start = T->preOrderList[x->indexInOrderedList + 1];
         } else {
-            //to check the correctness
-//            x->nodePath->start = x->nodePath->end;
-            st->paths.erase(x->nodePath);
-//            x->nodePath->~path();
-
-        }
-
-        // mark all nodes on the path as visited
-        for (int i = startdfn; i <= x->indexInOrderedList; i++) {
-            T->preOrderList[i]->visited = true;
-        }
-
-        for (int i = x->indexInOrderedList; i >= startdfn; i--) {
-            for (auto &u: T->preOrderList[i]->ReducedAL) {
-                if (!u->visited) {
-                    Tstar->adjList.push_back(u);
-                    T->preOrderList[i]->childreni.push_back(u);
-                    u->pari = T->preOrderList[i];
-                    u->childreni.clear();
-                    Reroot(u, T, Tstar, ds, st);
-                }
-            }
-        }
-
-    } else {
-        startIsfurthur = false;
-
-        // attach path (x , x.nodepath.end) to Tstar
-        for (int i = x->indexInOrderedList + 1; i <= enddfn; i++) {
-            if (i == x->indexInOrderedList + 1 && Tstar->adjList.empty()) {
-                //add the node to Tstar
-                Tstar->adjList.push_back(T->preOrderList[i - 1]);
-                T->preOrderList[i - 1]->childreni.clear();
-            }
-            //add the node to Tstar
-            Tstar->adjList.push_back(T->preOrderList[i]);
-            // set the node parent
-            T->preOrderList[i]->pari = T->preOrderList[i - 1];
-            T->preOrderList[i - 1]->childreni.push_back(T->preOrderList[i]);
-            // set the node children
-            T->preOrderList[i]->childreni.clear();
-        }
-
-        //Update L for vertices on path (x.nodepath.start, x)
-        ComputeReducedAL(x, x->nodePath->end, ds, T, st);
-
-        // add untraversed path to paths
-        if (x != x->nodePath->start) {
             x->nodePath->end = T->preOrderList[x->indexInOrderedList - 1];
-        } else {
-            //to check the correctness
-//            x->nodePath->end = x->nodePath->start;
-            st->paths.erase(x->nodePath);
-//            x->nodePath->~path();
         }
+    } else {
+        st->paths.erase(x->nodePath);
 
-        // mark all nodes on the path as visited
-        for (int i = x->indexInOrderedList; i <= enddfn; i++) {
-            T->preOrderList[i]->visited = true;
-        }
+    }
 
-        for (int i = enddfn; i >= x->indexInOrderedList; i--) {
-            for (auto &u: T->preOrderList[i]->ReducedAL) {
-                if (!u->visited) {
-                    Tstar->adjList.push_back(u);
-                    T->preOrderList[i]->childreni.push_back(u);
-                    u->pari = T->preOrderList[i];
-                    u->childreni.clear();
-                    Reroot(u, T, Tstar, ds, st);
-                }
+    // mark all nodes on the path as visited
+    for (int i = end; i != x->indexInOrderedList; i += inc) {
+        T->preOrderList[i]->visited = true;
+    }
+    T->preOrderList[x->indexInOrderedList]->visited = true;
+
+
+    for (int i = endp; startIsFurthur && (i >= end) || !startIsFurthur && (i >= x->indexInOrderedList); i--) {
+        for (auto &u: T->preOrderList[i]->ReducedAL) {
+            if (!u->visited) {
+                Tstar->adjList.push_back(u);
+                T->preOrderList[i]->childreni.push_back(u);
+                u->pari = T->preOrderList[i];
+                u->childreni.clear();
+                Reroot(u, T, Tstar, ds, st);
             }
         }
     }
+
+
+//    }
+//    else {
+//        startIsfurthur = false;
+//
+//        // attach path (x , x.nodepath.end) to Tstar
+//        for (int i = x->indexInOrderedList + 1; i <= enddfn; i++) {
+//            if (i == x->indexInOrderedList + 1 && Tstar->adjList.empty()) {
+//                //add the node to Tstar
+//                Tstar->adjList.push_back(T->preOrderList[i - 1]);
+//                T->preOrderList[i - 1]->childreni.clear();
+//            }
+//            //add the node to Tstar
+//            Tstar->adjList.push_back(T->preOrderList[i]);
+//            // set the node parent
+//            T->preOrderList[i]->pari = T->preOrderList[i - 1];
+//            T->preOrderList[i - 1]->childreni.push_back(T->preOrderList[i]);
+//            // set the node children
+//            T->preOrderList[i]->childreni.clear();
+//        }
+//
+//        //Update L for vertices on path (x.nodepath.start, x)
+//        ComputeReducedAL(x, x->nodePath->end, ds, T, st);
+//
+//        // add untraversed path to paths
+//        if (x != x->nodePath->start) {
+//            x->nodePath->end = T->preOrderList[x->indexInOrderedList - 1];
+//        } else {
+//            //to check the correctness
+////            x->nodePath->end = x->nodePath->start;
+//            st->paths.erase(x->nodePath);
+////            x->nodePath->~path();
+//        }
+//
+//        // mark all nodes on the path as visited
+//        for (int i = x->indexInOrderedList; i <= enddfn; i++) {
+//            T->preOrderList[i]->visited = true;
+//        }
+//        auto strt = std::chrono::high_resolution_clock::now();
+//        for (int i = enddfn; i >= x->indexInOrderedList; i--) {
+//            for (auto &u: T->preOrderList[i]->ReducedAL) {
+//                if (!u->visited) {
+//                    Tstar->adjList.push_back(u);
+//                    T->preOrderList[i]->childreni.push_back(u);
+//                    u->pari = T->preOrderList[i];
+//                    u->childreni.clear();
+//                    Reroot(u, T, Tstar, ds, st);
+//                }
+//            }
+//            auto stp = std::chrono::high_resolution_clock::now();
+//            auto duration = duration_cast<std::chrono::microseconds>(stp - strt);
+//            cout << duration.count() << endl;
+//        }
+//    }
 
 }
 

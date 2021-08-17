@@ -15,7 +15,7 @@ void graph::readGraph(string fileName) {
     ifstream ifs;
     ifs.open(fileName);
 
-    int x=0, numOfNodes, curNode, curNodeNeighb;
+    int x = 0, numOfNodes, curNode, curNodeNeighb;
     string line;
     if (!ifs) {
         cerr << "Unable to open file datafile.txt";
@@ -116,22 +116,24 @@ tree graph::ComputeDFSTree() {
 }
 
 void graph::makeAllNodesUnvisited() {
-    for(auto &i: this->adjList){
+    for (auto &i: this->adjList) {
         i.visited = false;
         i.active = true;
         i.ReducedAL.clear();
     }
 }
+
 tree graph::ComputeDFSTreeBetweenActiveNodes() {
     node *dummyNode;
     dummyNode = &this->dummyNode;
     dummyNode->children.clear();
+    dummyNode->neighbours.clear();
     for (auto &i : this->adjList) {
-        i.neighbours.push_back(dummyNode);//connecting dummy node to all vertices
+//        i.neighbours.push_back(dummyNode);//connecting dummy node to all vertices
         i.cpNbrs = i.neighbours;
         i.visited = false;
         i.children.clear();
-        if(i.active)
+        if (i.active)
             dummyNode->neighbours.push_back(&i);
     }
     dummyNode->cpNbrs = dummyNode->neighbours;
@@ -150,7 +152,8 @@ tree graph::ComputeDFSTreeBetweenActiveNodes() {
         } else {
             stack_top_rnd_nbr = stack_top->cpNbrs.back();
             stack_top->cpNbrs.pop_back();
-            if (!stack_top_rnd_nbr->visited && stack_top_rnd_nbr->active) {// if u's visited is unvisited add it to the DFS tree
+            if (!stack_top_rnd_nbr->visited &&
+                stack_top_rnd_nbr->active) {// if u's visited is unvisited add it to the DFS tree
                 T.adjList.push_back(stack_top_rnd_nbr);
                 stack_top_rnd_nbr->par = stack_top;
                 stack_top->children.push_back(stack_top_rnd_nbr);
@@ -163,3 +166,54 @@ tree graph::ComputeDFSTreeBetweenActiveNodes() {
 //    T.ComputeSubtreeSizes(T.root);
     return T;
 }
+
+void graph::RcursiveDFSBetweenAN(tree *T, node *v) {
+    static int c=1;
+    c++;
+//    cout << "dfs() is called " << c << " times" << endl;
+    if (T->adjList.empty()) {
+        node *dummyNode;
+        dummyNode = &this->dummyNode;
+        dummyNode->children.clear();
+        dummyNode->neighbours.clear();
+        for (auto &i : this->adjList) {
+            i.cpNbrs = i.neighbours;
+            i.visited = false;
+            i.children.clear();
+            if (i.active)
+                dummyNode->neighbours.push_back(&i);
+        }
+        dummyNode->cpNbrs = dummyNode->neighbours;
+
+        T->root = dummyNode;
+//        T.adjList.push_back(dummyNode);
+//        dummyNode->visited = true;
+//        if (dummyNode->cpNbrs.empty()) {
+//            return;
+//        } else {
+//            node *x = dummyNode->cpNbrs.back();
+//            dummyNode->children.push_back(x);
+//            x->par = dummyNode;
+//            dummyNode->cpNbrs.pop_back();
+//            this->RcursiveDFSBetweenAN(T, x);
+//        }
+    }
+    if (v->cpNbrs.empty()) {
+        return;
+    } else {
+        T->adjList.push_back(v);
+        v->visited = true;
+        for (auto &i: v->cpNbrs) {
+            static int c=1;
+            c++;
+//            cout << "dfs() is called " << c << " times" << endl;
+            if (!(i->visited) && i->active) {
+                v->children.push_back(i);
+                i->par = v;
+                v->cpNbrs.pop_back();
+                this->RcursiveDFSBetweenAN(T, i);
+            }
+        }
+    }
+}
+

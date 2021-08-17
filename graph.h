@@ -19,6 +19,7 @@ public:
     tree ComputeDFSTree();
     void makeAllNodesUnvisited();
     tree ComputeDFSTreeBetweenActiveNodes();
+    void RcursiveDFSBetweenAN(tree *T, node* v);
 
 };
 

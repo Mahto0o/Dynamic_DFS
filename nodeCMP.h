@@ -8,11 +8,8 @@
 class node;
 bool nodeCMP (const node *a, const node *b);
 //bool nodeRLCMP(const node *a, const node *b);
-struct nodeRLCMP {
-    bool operator() (const node *a, const node *b)const;
-//    bool operator() (const node *a, const node *b) const {
-//        return  a->indexInOrderedList < b->indexInOrderedList;
-//    }
-};
+//struct nodeRLCMP {
+//    bool operator() (const node *a, const node *b)const;
+//};
 
 #endif //CLION_NODECMP_H

@@ -19,7 +19,7 @@ public:
     node *par = NULL;// for tree
     node* pari = NULL;
     vector<node* > cpNbrs;// extra neighbours list for DFS
-    std::set<node*, nodeRLCMP> ReducedAL;
+    std::set<node*> ReducedAL;
 //    string attr; //tree or path
     int sizeofST = 1;
     int indexInOrderedList;// dfn(x) in current tree

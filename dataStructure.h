@@ -17,7 +17,7 @@ using namespace std;
 class dataStructure {
 public:
     using Cmp = std::integral_constant<decltype(&nodeCMP), &nodeCMP>;
-    vector<set<node *, Cmp>> ds;
+    vector<set<node *, Cmp> > ds;
 
 
     void computeDs(graph G, tree T);
