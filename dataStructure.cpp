@@ -5,9 +5,9 @@
 #include "dataStructure.h"
 #include "DynamicDFS.h"
 
-void dataStructure::computeDs(graph G, tree T) {
+void dataStructure::computeDs(graph* G, tree* T) {
 
-    for (auto &i : T.preOrderList) {
+    for (auto &i : T->preOrderList) {
 //        this->ds.push_back(set<node*, nodeDfnCmp> ());
         i->dfn = i->indexInOrderedList;
         this->ds.emplace_back();

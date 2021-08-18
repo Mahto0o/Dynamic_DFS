@@ -9,9 +9,9 @@
 
 using namespace std;
 using namespace std::chrono;
-#define X   "/Users/mahtashafieesabet/Desktop/codes/pythonproject/datasets/GRAPH_SW_N100_E4000_P0.1_K80_T/"
+#define X   "/Users/mahtashafieesabet/Desktop/codes/pythonproject/datasets/GRAPH_SW_N1000_E300000_P0.1_K600_T/"
 #define FILENAME   X"Graph.txt"
-#define INPUTMATRIX X"Data/08-15--02-02-36-DENSITY0.9_TS100_input.npy"
+#define INPUTMATRIX X"Data/08-15--02-05-10-DENSITY0.9_TS100_input.npy"
 
 //#define INPUTMATRIX "/Users/mahtashafieesabet/Desktop/codes/pythonproject/GRAPH_SW_N11_E22_P0.5_K4_T/data/07-13--23-52-08-DENSITY0.55_TS10_input.npy"
 
@@ -28,11 +28,12 @@ int main() {
     T = G.ComputeDFSTree();
 
     T.ComputePreorderList();
-    auto pre = high_resolution_clock::now();;
+
     shallowTree st;
     st.makeShallowTreeOfTree(&T);
     dataStructure D;
-    D.computeDs(G, T);
+    auto pre = high_resolution_clock::now();
+    D.computeDs(&G, &T);
     auto endpre = high_resolution_clock::now();
     auto durationpre = duration_cast<microseconds>(endpre - pre);
     cout << "pre processing:" << durationpre.count() << endl;
@@ -88,16 +89,16 @@ int main() {
         TStar->adjList.clear();
         TStar->preOrderList.clear();
         TStar->root = nullptr;
-//        s1 = high_resolution_clock::now();
-        Reroot(T.root, &T, TStar, D, &st);
+        s1 = high_resolution_clock::now();
+        Reroot(T.root, &T, TStar, &D, &st);
 //        sp1 = high_resolution_clock::now();
 //        durationf = duration_cast<microseconds>(sp1 - s1);
-//        cout << "Reroot st st:" << durationf.count() << endl;
+//        cout << "Reroot st:" << durationf.count() << endl;
         TStar->root = T.root;
-        auto sp1 = high_resolution_clock::now();
-        auto durationf = duration_cast<microseconds>(sp1 - s1);
+        auto sp1 = high_resolution_clock::now();//auto
+        auto durationf = duration_cast<microseconds>(sp1 - s1);//AUTO
         updateTime[t] = durationf.count();
-//        cout << "Update:" << t << durationf.count() << endl;
+//        cout << "Updatee:" << t << durationf.count() << endl;
 //        TStar->ComputePreorderList();
 
     }
@@ -115,18 +116,6 @@ int main() {
     //DFS
     auto dfsstart = high_resolution_clock::now();
 
-//    G.readGraph(FILENAME);
-
-//    T = G.ComputeDFSTree();
-//    npy::LoadArrayFromNumpy(INPUTMATRIX, shape, fortran_order, data);
-//    matrix.clear();
-//    for (int i = 0; i < shape[1]; i++) { //10
-//        vector<bool> v1;
-//        for (int j = 0; j < shape[0]; j++) {//15
-//            v1.push_back(data[j * 10 + i]);
-//        }
-//        matrix.push_back(v1);
-//    }
     for (int t = 0; t < shape[1]; t++) {
         auto s1 = high_resolution_clock::now();
         inactiveNodes.clear();
