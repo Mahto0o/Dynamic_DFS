@@ -6,10 +6,10 @@
 #define CLION_NODECMP_H
 
 class node;
-bool nodeCMP (const node *a, const node *b);
+//bool nodeCMP (const node *a, const node *b);
 //bool nodeRLCMP(const node *a, const node *b);
-//struct nodeRLCMP {
-//    bool operator() (const node *a, const node *b)const;
-//};
+struct nodeRLCMP {
+    bool operator() (const node *a, const node *b)const;
+};
 
 #endif //CLION_NODECMP_H

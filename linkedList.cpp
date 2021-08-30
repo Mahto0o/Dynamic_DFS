@@ -52,7 +52,7 @@ void linkedList::erase(path* p) {
         if(p->next != nullptr ){
             p->next->prev = p->prev;
         }
-        p->~path();
+//        p->~path();
         return;
     }
     if(p->prev == nullptr && p != head){

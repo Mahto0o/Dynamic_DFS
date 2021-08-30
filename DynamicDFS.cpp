@@ -12,7 +12,36 @@ bool myNodeCF(node *a, node *b) {
     return (a->sizeofST < b->sizeofST);
 }
 
-void ComputeReducedAL(node *x, node *y, dataStructure *ds, tree *T, shallowTree *st) {
+bool Node_cmp_for_ds(node *a, node *b) {
+    return a->indexInOrderedList < b->indexInOrderedList;
+}
+
+node *lower_bound(node *nd, vector<node *> &ancestors) {
+    int min = 0, max = ancestors.size() - 1;
+    int mean;
+    while (max > min) {
+        mean = (max + min) / 2;
+        if (ancestors[mean]->indexInOrderedList == nd->indexInOrderedList) {
+            return ancestors[mean];
+        } else if (ancestors[mean]->indexInOrderedList > nd->indexInOrderedList) {
+            max = (mean - 1);
+        } else {
+            min = (mean + 1);
+        }
+    }
+
+    if (ancestors[min]->indexInOrderedList <= nd->indexInOrderedList)
+        return ancestors[min];
+    else if (ancestors[min - 1]->indexInOrderedList <= nd->indexInOrderedList)
+        return ancestors[min - 1];
+    else
+        cout<<"he;;"<<endl;
+    return nullptr;
+
+
+}
+
+void ComputeReducedAL(node *x, node *y, dataStructure *ds, tree *T, shallowTree *st, bool startIsFurthur) {
     static int count = 1;
     count++;
 //    cout << "CmpReducedAL() is called " << count << " times" << endl;
@@ -20,29 +49,49 @@ void ComputeReducedAL(node *x, node *y, dataStructure *ds, tree *T, shallowTree 
     node *z;
     node *w;
     node *u;
+    if (!startIsFurthur && x != x->nodePath->start) {
+        for (int i = x->dfn; i <= y->dfn; i++) {
+            w = ds->query(T->preOrderList[i], x->nodePath->start, T->preOrderList[x->indexInOrderedList - 1]);
+            if (w != nullptr && w->active && !w->visited) {
+                T->preOrderList[i]->ReducedAL.insert(w);
+            }
+        }
+    }
     miu = T->preOrderList[x->dfn]->nodePath->par;   //p.par;
     while (miu != nullptr && miu->start != nullptr && miu->end != nullptr) {
         for (int i = x->dfn; i <= y->dfn; i++) {
 
             w = ds->query(T->preOrderList[i], miu->start, miu->end);
-            if (w != nullptr) {
+            if (w != nullptr && w->active && !w->visited) {
                 T->preOrderList[i]->ReducedAL.insert(w);
             }
         }
         miu = miu->par;
     }
 
+//    if (startIsFurthur && x != x->nodePath->end) {
+//        for (int i = y->indexInOrderedList + 1; i <= x->nodePath->end->indexInOrderedList; i++) {
+//            u = T->preOrderList[i];
+//            if (u->active && !u->visited) {
+//                w = ds->query(u, x, y);
+//                if (w != nullptr) {
+//                    w->ReducedAL.insert(u);
+//                }
+//            }
+//        }
+//    }
     // C = descT(z) \ {v(dfn(x)), ..., v(dfn(y))}
     for (int i = y->dfn + 1; i < x->dfn + x->sizeofST; i++) { //2 to 10
         u = T->preOrderList[i];
         if (u->active && !u->visited) {
-            auto start = high_resolution_clock::now();
+//            auto start = high_resolution_clock::now();
             w = ds->query(u, x, y);
-            auto stp = high_resolution_clock::now();
-            auto durationpre = duration_cast<microseconds>(stp - start);
+//            auto stp = high_resolution_clock::now();
+//            auto durationpre = duration_cast<microseconds>(stp - start);
 //            cout << durationpre.count();
             if (w != nullptr) {
                 w->ReducedAL.insert(u);
+
             }
         }
     }
@@ -50,8 +99,8 @@ void ComputeReducedAL(node *x, node *y, dataStructure *ds, tree *T, shallowTree 
 
 void Reroot(node *x, tree *T, tree *Tstar, dataStructure *ds, shallowTree *st) {
 
-    static int count = 1;
-    count++;
+//    static int count = 1;
+//    count++;
 //    cout << "Reroot() is called " << count << " times" << endl;
     // handle node insertion
     int start, end, endp;
@@ -95,15 +144,15 @@ void Reroot(node *x, tree *T, tree *Tstar, dataStructure *ds, shallowTree *st) {
         T->preOrderList[x->indexInOrderedList]->childreni.clear();
     }
 
-    auto strt = std::chrono::high_resolution_clock::now();
+//    auto strt = std::chrono::high_resolution_clock::now();
     //Update RAL(L) for vertices on the path (x.nodepath.start, x)
     if (startIsFurthur) {
-        ComputeReducedAL(x->nodePath->start, x, ds, T, st);
+        ComputeReducedAL(x->nodePath->start, x, ds, T, st, startIsFurthur);
     } else {
-        ComputeReducedAL(x, x->nodePath->end, ds, T, st);
+        ComputeReducedAL(x, x->nodePath->end, ds, T, st, startIsFurthur);
     }
-    auto stp = std::chrono::high_resolution_clock::now();
-    auto duration = duration_cast<std::chrono::microseconds>(stp - strt);
+//    auto stp = std::chrono::high_resolution_clock::now();
+//    auto duration = duration_cast<std::chrono::microseconds>(stp - strt);
 //    cout << duration.count() << endl;
 
     // add untraversed path to paths
@@ -147,7 +196,7 @@ void Toggle(vector<int> &inactiveNodes, vector<int> &activeNodes, shallowTree *s
     }
 }
 
-void UpdateShallowTree(vector<int> inactiveNodes, vector<int> activeNodes, shallowTree *st, tree *T, graph *G) {
+void UpdateShallowTree(vector<int> &inactiveNodes, vector<int> &activeNodes, shallowTree *st, tree *T, graph *G) {
 
     for (auto &i:inactiveNodes) {
         if (G->adjList[i].nodePath != nullptr) {
