@@ -35,18 +35,18 @@ node *lower_bound(node *nd, vector<node *> &ancestors) {
     else if (ancestors[min - 1]->indexInOrderedList <= nd->indexInOrderedList)
         return ancestors[min - 1];
     else
-        cout<<"he;;"<<endl;
+        cout<<"hello"<<endl;
     return nullptr;
 
 
 }
 
-void ComputeReducedAL(node *x, node *y, dataStructure *ds, tree *T, shallowTree *st, bool startIsFurthur) {
+void ComputeReducedAL(node *x, node *y, dataStructure *ds, tree *T, bool startIsFurthur) {
     static int count = 1;
     count++;
 //    cout << "CmpReducedAL() is called " << count << " times" << endl;
     path *miu;
-    node *z;
+//    node *z;
     node *w;
     node *u;
     if (!startIsFurthur && x != x->nodePath->start) {
@@ -69,17 +69,6 @@ void ComputeReducedAL(node *x, node *y, dataStructure *ds, tree *T, shallowTree 
         miu = miu->par;
     }
 
-//    if (startIsFurthur && x != x->nodePath->end) {
-//        for (int i = y->indexInOrderedList + 1; i <= x->nodePath->end->indexInOrderedList; i++) {
-//            u = T->preOrderList[i];
-//            if (u->active && !u->visited) {
-//                w = ds->query(u, x, y);
-//                if (w != nullptr) {
-//                    w->ReducedAL.insert(u);
-//                }
-//            }
-//        }
-//    }
     // C = descT(z) \ {v(dfn(x)), ..., v(dfn(y))}
     for (int i = y->dfn + 1; i < x->dfn + x->sizeofST; i++) { //2 to 10
         u = T->preOrderList[i];
@@ -97,7 +86,7 @@ void ComputeReducedAL(node *x, node *y, dataStructure *ds, tree *T, shallowTree 
     }
 }
 
-void Reroot(node *x, tree *T, tree *Tstar, dataStructure *ds, shallowTree *st) {
+void Reroot(node *x, tree *T, tree *Tstar, dataStructure *ds) {
 
 //    static int count = 1;
 //    count++;
@@ -147,9 +136,9 @@ void Reroot(node *x, tree *T, tree *Tstar, dataStructure *ds, shallowTree *st) {
 //    auto strt = std::chrono::high_resolution_clock::now();
     //Update RAL(L) for vertices on the path (x.nodepath.start, x)
     if (startIsFurthur) {
-        ComputeReducedAL(x->nodePath->start, x, ds, T, st, startIsFurthur);
+        ComputeReducedAL(x->nodePath->start, x, ds, T, startIsFurthur);
     } else {
-        ComputeReducedAL(x, x->nodePath->end, ds, T, st, startIsFurthur);
+        ComputeReducedAL(x, x->nodePath->end, ds, T, startIsFurthur);
     }
 //    auto stp = std::chrono::high_resolution_clock::now();
 //    auto duration = duration_cast<std::chrono::microseconds>(stp - strt);
@@ -163,7 +152,7 @@ void Reroot(node *x, tree *T, tree *Tstar, dataStructure *ds, shallowTree *st) {
             x->nodePath->end = T->preOrderList[x->indexInOrderedList - 1];
         }
     } else {
-        st->paths.erase(x->nodePath);
+//        st->paths.erase(x->nodePath);
 
     }
 
@@ -181,13 +170,13 @@ void Reroot(node *x, tree *T, tree *Tstar, dataStructure *ds, shallowTree *st) {
                 T->preOrderList[i]->childreni.push_back(u);
                 u->pari = T->preOrderList[i];
                 u->childreni.clear();
-                Reroot(u, T, Tstar, ds, st);
+                Reroot(u, T, Tstar, ds);
             }
         }
     }
 }
 
-void Toggle(vector<int> &inactiveNodes, vector<int> &activeNodes, shallowTree *st, graph *G) {
+void Toggle(vector<int> &inactiveNodes, vector<int> &activeNodes, graph *G) {
     for (auto &i: inactiveNodes) {
         G->adjList[i].active = false;
     }
@@ -202,6 +191,8 @@ void UpdateShallowTree(vector<int> &inactiveNodes, vector<int> &activeNodes, sha
         if (G->adjList[i].nodePath != nullptr) {
 
             path *p = G->adjList[i].nodePath;
+            st->paths.erase(p);
+            path *pp;
             bool startIsSet = false;
 
             //delete the inactive nodes and add the remaining pieces of path to st
@@ -214,54 +205,47 @@ void UpdateShallowTree(vector<int> &inactiveNodes, vector<int> &activeNodes, sha
 
                 if (T->preOrderList[j]->active && !startIsSet) {
                     //set the start
-                    st->paths.push_back(T->preOrderList[j]);
+                    pp = new path(T->preOrderList[j]);
+                    st->paths.insert(pp);
                     startIsSet = true;
 //                    continue;
                 }
 
                 if (!T->preOrderList[j]->active && startIsSet) {
                     T->preOrderList[j]->nodePath = nullptr;
-                    st->paths.back()->end = T->preOrderList[j - 1];
-                    st->paths.back()->setPathSize();
+                    pp->end = T->preOrderList[j - 1];
+                    pp->setPathSize();
                     startIsSet = false;
                 }
                 if (T->preOrderList[j]->active && T->preOrderList[j] == p->end) {
-                    st->paths.back()->end = T->preOrderList[j];
-                    st->paths.back()->setPathSize();
+                    pp->end = T->preOrderList[j];
+                    pp->setPathSize();
                     startIsSet = false;
                 }
             }
             // delete this nodePath G.adjList[i].nodePath
 
-            st->paths.erase(p);
+//            st->paths.erase(p);
         }
     }
     //set nodePath for all the active nodes
-    path *temp = st->paths.head;
-    if (temp == nullptr) {
-        cout << "Error: even the dummy node is inactive!";
-    }
-    while (temp != nullptr) {
-        for (int j = temp->start->indexInOrderedList; j <= temp->end->indexInOrderedList; j++) {
-            T->preOrderList[j]->nodePath = temp;
+    for (auto &i : st->paths){
+        for (int j = i->start->indexInOrderedList; j <= i->end->indexInOrderedList; j++) {
+            T->preOrderList[j]->nodePath = i;
         }
-        temp = temp->next;
     }
 
     //set the parent for each nodePath in st
-    temp = st->paths.head;
-    while (temp != nullptr) {
-        if (temp->start->indx == -1) {
-            temp->par = nullptr;
-            temp = temp->next;
+    for (auto &i : st->paths){
+        if (i->start->indx == -1) {
+            i->par = nullptr;
             continue;
         }
-        node *nearestActiveAncestor = temp->start->par;
+        node *nearestActiveAncestor = i->start->par;
         while (!nearestActiveAncestor->active) {
             nearestActiveAncestor = nearestActiveAncestor->par;
         }
-        temp->par = nearestActiveAncestor->nodePath;
-        temp = temp->next;
+        i->par = nearestActiveAncestor->nodePath;
     }
 
 }

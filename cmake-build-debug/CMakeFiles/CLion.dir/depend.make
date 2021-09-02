@@ -6,7 +6,6 @@ CMakeFiles/CLion.dir/DynamicDFS.cpp.o: \
  ../DynamicDFS.h \
  ../dataStructure.h \
  ../graph.h \
- ../linkedList.h \
  ../node.h \
  ../nodeCMP.h \
  ../nodeDfnCmp.h \
@@ -26,7 +25,6 @@ CMakeFiles/CLion.dir/dataStructure.cpp.o: \
  ../dataStructure.cpp \
  ../dataStructure.h \
  ../graph.h \
- ../linkedList.h \
  ../node.h \
  ../nodeCMP.h \
  ../nodeDfnCmp.h \
@@ -40,18 +38,11 @@ CMakeFiles/CLion.dir/graph.cpp.o: \
  ../nodeCMP.h \
  ../path.h \
  ../tree.h
-CMakeFiles/CLion.dir/linkedList.cpp.o: \
- ../linkedList.cpp \
- ../linkedList.h \
- ../node.h \
- ../nodeCMP.h \
- ../path.h
 CMakeFiles/CLion.dir/main.cpp.o: \
  ../DynamicDFS.h \
  ../dataStructure.h \
  ../graph.h \
  ../json.hpp \
- ../linkedList.h \
  ../main.cpp \
  ../node.h \
  ../nodeCMP.h \
@@ -82,7 +73,6 @@ CMakeFiles/CLion.dir/path.cpp.o: \
  ../path.cpp \
  ../path.h
 CMakeFiles/CLion.dir/shallowTree.cpp.o: \
- ../linkedList.h \
  ../node.h \
  ../nodeCMP.h \
  ../path.h \
@@ -93,7 +83,6 @@ CMakeFiles/CLion.dir/tree.cpp.o: \
  ../DynamicDFS.h \
  ../dataStructure.h \
  ../graph.h \
- ../linkedList.h \
  ../node.h \
  ../nodeCMP.h \
  ../nodeDfnCmp.h \

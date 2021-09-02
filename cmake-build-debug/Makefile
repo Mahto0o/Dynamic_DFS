@@ -225,30 +225,6 @@ graph.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/CLion.dir/build.make CMakeFiles/CLion.dir/graph.cpp.s
 .PHONY : graph.cpp.s
 
-linkedList.o: linkedList.cpp.o
-.PHONY : linkedList.o
-
-# target to build an object file
-linkedList.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CLion.dir/build.make CMakeFiles/CLion.dir/linkedList.cpp.o
-.PHONY : linkedList.cpp.o
-
-linkedList.i: linkedList.cpp.i
-.PHONY : linkedList.i
-
-# target to preprocess a source file
-linkedList.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CLion.dir/build.make CMakeFiles/CLion.dir/linkedList.cpp.i
-.PHONY : linkedList.cpp.i
-
-linkedList.s: linkedList.cpp.s
-.PHONY : linkedList.s
-
-# target to generate assembly for a file
-linkedList.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/CLion.dir/build.make CMakeFiles/CLion.dir/linkedList.cpp.s
-.PHONY : linkedList.cpp.s
-
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -438,9 +414,6 @@ help:
 	@echo "... graph.o"
 	@echo "... graph.i"
 	@echo "... graph.s"
-	@echo "... linkedList.o"
-	@echo "... linkedList.i"
-	@echo "... linkedList.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

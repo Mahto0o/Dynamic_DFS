@@ -10,8 +10,8 @@ using namespace std;
 class node;
 class path {
 public:
-    path* next = nullptr;
-    path* prev = nullptr;
+//    path* next = nullptr;
+//    path* prev = nullptr;
     node* start = nullptr;
     node* end = nullptr;
     path* par = nullptr;
@@ -20,6 +20,7 @@ public:
     path();
     path(node* start);
     ~path();
+    bool operator() (path *p1, path *p2) const;
 };
 
 
