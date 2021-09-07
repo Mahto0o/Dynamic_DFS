@@ -24,6 +24,7 @@ public:
     void computeDs(graph* G, tree* T);
 
     node* query(node* x, node* pathStart, node* pathEnd);
+    node* query2(node* x, node* pathStart, node* pathEnd);
 };
 
 

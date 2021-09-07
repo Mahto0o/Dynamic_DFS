@@ -5,19 +5,9 @@
 #include "dataStructure.h"
 #include "DynamicDFS.h"
 #include <iostream>
+#include <vector>
 
 void dataStructure::computeDs(graph* G, tree* T) {
-
-//    for (auto &i : T->preOrderList) {
-//
-//        i->dfn = i->indexInOrderedList;
-//        this->ds.emplace_back();
-//        for (auto &j: i->neighbours) {
-//            if (j->indexInOrderedList < i->indexInOrderedList) {
-//                this->ds.back().insert(j);
-//            }
-//        }
-//    }
     // filling the data structure
     for (auto &i : T->preOrderList) {
         i->dfn = i->indexInOrderedList;
@@ -39,23 +29,6 @@ void dataStructure::computeDs(graph* G, tree* T) {
 }
 
 node *dataStructure::query(node *x, node *pathStart, node *pathEnd) {
-//    static int count = 1;
-//    count++;
-//    cout << "query() is called " << count << " times" << endl;
-//    set<node*, decltype(nodeCMP)*>::iterator itup;
-//    node *temp;
-//    itup = this->ds[x->dfn].lower_bound(pathEnd);
-////    auto itup = this->ds[x->dfn].upper_bound(pathEnd);
-//    if (itup != this->ds[x->dfn].end()) {
-//        temp = *itup;
-//    } else {
-//        return nullptr;
-//    }
-//    if (temp->dfn < pathStart->dfn) {
-//        return nullptr;
-//    }
-//    return temp;
-
     // array query
     node *temp;
     temp = lower_bound(pathEnd, this->data_structure[x->dfn]);
@@ -64,6 +37,28 @@ node *dataStructure::query(node *x, node *pathStart, node *pathEnd) {
         return nullptr;
     }
     return temp;
-
-
+}
+node *dataStructure::query2(node *x, node *pathStart, node *pathEnd) {
+    std::vector<node*> &ancestors = this->data_structure[x->dfn];
+    int min = 0, max = ancestors.size() - 1;
+    int mean;
+    while (max > min) {
+        mean = (max + min) / 2;
+        if (ancestors[mean]->dfn >= pathStart->dfn &&
+        ancestors[mean]->dfn <= pathEnd->dfn) {
+            return ancestors[mean];
+        } else if (ancestors[mean]->dfn < pathStart->dfn) {
+            min = (mean + 1);
+        } else {
+            max = (mean - 1);
+        }
+    }
+    if(min == max){
+        mean = max;
+        if (ancestors[mean]->dfn >= pathStart->dfn &&
+        ancestors[mean]->dfn <= pathEnd->dfn) {
+            return ancestors[mean];
+        }
+    }
+    return nullptr;
 }

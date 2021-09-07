@@ -35,10 +35,8 @@ node *lower_bound(node *nd, vector<node *> &ancestors) {
     else if (ancestors[min - 1]->indexInOrderedList <= nd->indexInOrderedList)
         return ancestors[min - 1];
     else
-        cout<<"hello"<<endl;
+        cout << "hello" << endl;
     return nullptr;
-
-
 }
 
 void ComputeReducedAL(node *x, node *y, dataStructure *ds, tree *T, bool startIsFurthur) {
@@ -84,6 +82,75 @@ void ComputeReducedAL(node *x, node *y, dataStructure *ds, tree *T, bool startIs
             }
         }
     }
+}
+
+void ComputeReducedAL2(node *x, node *y, dataStructure *ds, tree *T) {
+
+    path *miu;
+    node *w;
+    node *u;
+//    bool flag = false;
+
+    miu = T->preOrderList[x->dfn]->nodePath->par;   //p.par;
+    while (miu != nullptr && miu->start != nullptr && miu->end != nullptr) {
+        for (int i = x->dfn; i <= y->dfn; i++) {
+            if (miu->start->visited) {
+                break;
+            }
+            w = ds->query2(T->preOrderList[i], miu->start, miu->end);
+            if (w != nullptr && w->active && !w->visited) {
+                T->preOrderList[i]->ReducedAL.insert(w);
+                break;
+            }
+        }
+        miu = miu->par;
+    }
+
+    // C = descT(z) \ {v(dfn(x)), ..., v(dfn(y))}
+    if (x->indexInOrderedList != 0) {
+        for (int i = y->dfn + 1; i < x->dfn + x->sizeofST; i++) { //2 to 10
+            u = T->preOrderList[i];
+            if(u->visited){
+                i = u->nodePath->end->indexInOrderedList;
+            }
+            if (u->active && !u->visited) {
+                w = ds->query2(u, x, y);
+                if (w != nullptr) {
+                    w->ReducedAL.insert(u);
+                    i = u->nodePath->end->indexInOrderedList + 1;
+                }
+            }
+        }
+    } else {
+        if (y != x) {
+            for (int i = y->dfn + 1; i < x->dfn + x->sizeofST; i++) { //2 to 10
+                u = T->preOrderList[i];
+                if(u->visited){
+                    i = u->nodePath->end->indexInOrderedList;
+                }
+                if (u->active && !u->visited) {
+                    w = ds->query2(u, T->preOrderList[x->dfn + 1], y);
+                    if (w != nullptr) {
+                        w->ReducedAL.insert(u);
+                        i = u->nodePath->end->indexInOrderedList;
+                    } else {
+                        x->ReducedAL.insert(u);
+                    }
+                }
+            }
+        } else {
+            for (int i = y->dfn + 1; i < x->dfn + x->sizeofST; i++) {
+                u = T->preOrderList[i];
+                if(u->visited){
+                    i = u->nodePath->end->indexInOrderedList;
+                }
+                if (u->active && !u->visited) {
+                    x->ReducedAL.insert(u);
+                }
+            }
+        }
+    }
+
 }
 
 void Reroot(node *x, tree *T, tree *Tstar, dataStructure *ds) {
@@ -176,6 +243,68 @@ void Reroot(node *x, tree *T, tree *Tstar, dataStructure *ds) {
     }
 }
 
+void Reroot2(node *x, tree *T, tree *Tstar, dataStructure *ds) {
+
+    int start;
+//    bool startIsFurthur;
+    int startdfn = x->nodePath->start->indexInOrderedList;
+    int enddfn = x->nodePath->end->indexInOrderedList;
+    start = x->indexInOrderedList - 1;
+
+    // attach path (x, x.nodepath.start] to Tstar
+    for (int i = x->indexInOrderedList - 1; i >= startdfn; i--) {
+        //add the dummy node to Tstar
+        if (i == start && Tstar->adjList.empty()) {
+            Tstar->adjList.push_back(T->preOrderList[i + 1]);
+            T->preOrderList[i + 1]->childreni.clear();
+        }
+        //add the node to Tstar
+        Tstar->adjList.push_back(T->preOrderList[i]);
+        // set the node parent
+        T->preOrderList[i]->pari = T->preOrderList[i + 1];
+        T->preOrderList[i + 1]->childreni.push_back(T->preOrderList[i]);
+        // clear the node children
+        T->preOrderList[i]->childreni.clear();
+    }
+
+    if (x->indexInOrderedList == startdfn && Tstar->adjList.empty()) {
+        Tstar->adjList.push_back(T->preOrderList[x->indexInOrderedList]);
+        T->preOrderList[x->indexInOrderedList]->childreni.clear();
+    }
+
+    // attach path (x, x.nodepath.end] to Tstar
+    for (int i = x->indexInOrderedList + 1; i <= enddfn; i++) {
+        //add the node to Tstar
+        Tstar->adjList.push_back(T->preOrderList[i]);
+        // set the node parent
+        T->preOrderList[i]->pari = T->preOrderList[i - 1];
+        T->preOrderList[i - 1]->childreni.push_back(T->preOrderList[i]);
+        // clear the node children
+        T->preOrderList[i]->childreni.clear();
+    }
+
+    //Update RAL(L) for vertices on the path (x.nodepath.start, x.nodepath.end)
+    ComputeReducedAL2(x->nodePath->start, x->nodePath->end, ds, T);
+
+    // mark all nodes on the path as visited
+    for (int i = startdfn; i <= enddfn; i++) {
+        T->preOrderList[i]->visited = true;
+    }
+
+
+    for (int i = enddfn; i >= startdfn; i--) {
+        for (auto &u: T->preOrderList[i]->ReducedAL) {
+            if (!u->visited) {
+                Tstar->adjList.push_back(u);
+                T->preOrderList[i]->childreni.push_back(u);
+                u->pari = T->preOrderList[i];
+                u->childreni.clear();
+                Reroot2(u, T, Tstar, ds);
+            }
+        }
+    }
+}
+
 void Toggle(vector<int> &inactiveNodes, vector<int> &activeNodes, graph *G) {
     for (auto &i: inactiveNodes) {
         G->adjList[i].active = false;
@@ -229,14 +358,14 @@ void UpdateShallowTree(vector<int> &inactiveNodes, vector<int> &activeNodes, sha
         }
     }
     //set nodePath for all the active nodes
-    for (auto &i : st->paths){
+    for (auto &i : st->paths) {
         for (int j = i->start->indexInOrderedList; j <= i->end->indexInOrderedList; j++) {
             T->preOrderList[j]->nodePath = i;
         }
     }
 
     //set the parent for each nodePath in st
-    for (auto &i : st->paths){
+    for (auto &i : st->paths) {
         if (i->start->indx == -1) {
             i->par = nullptr;
             continue;
@@ -249,3 +378,4 @@ void UpdateShallowTree(vector<int> &inactiveNodes, vector<int> &activeNodes, sha
     }
 
 }
+

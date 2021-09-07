@@ -8,8 +8,9 @@
 #include "npy.hpp"
 #include "json.hpp"
 #include<string.h>
+#include <vector>
 
-int run_experiment(string graphfile, string inputmatrix, int count);
+int run_experiment(string graphfile, string inputmatrix, int count, double (&run_time)[3][15]);
 
 // for convenience
 using json = nlohmann::json;using namespace std;
@@ -36,6 +37,7 @@ int main(int argc, char *argv[]) {
     json experiments;
     json_file >> experiments;
 
+    double running_time[3][15];
     int count = 0;
     json data = experiments["data"];
     for (auto &i: data) {
@@ -44,17 +46,23 @@ int main(int argc, char *argv[]) {
         string inputmatrix = graphdir + i["inputmatrix"].get<string>();
 //        cout << "Running experiment: " << n_exp << '\n';
 //        cout << graphdir << '\t' << inputmatrix << '\n';
-        if(count == 9){
-//            cout<<"here";
-        }
-        run_experiment(graphdir + "Graph.txt", inputmatrix, count);
-    }
 
+        run_experiment(graphdir + "Graph.txt", inputmatrix, count-1, running_time);
+    }
+    std::ofstream out("runtime.csv");
+
+    for (auto& row : running_time) {
+        for (auto  col : row){
+            out << col <<',';
+        }
+
+        out << '\n';
+    }
     return 0;
 
 }
 
-int run_experiment(string graphfile, string inputmatrix, int count) {
+int run_experiment(string graphfile, string inputmatrix, int count, double (&run_time)[3][15]) {
     using std::chrono::high_resolution_clock;
     using std::chrono::duration_cast;
     using std::chrono::duration;
@@ -96,7 +104,9 @@ int run_experiment(string graphfile, string inputmatrix, int count) {
     vector<int> activeNodes;
     tree *TStar = new tree();
 
-    double updateTime[shape[1]];
+    double updateTimeReroot2[shape[1]];
+    double updateTimeReroot[shape[1]];
+
 
     for (int t = 0; t < shape[1]; t++) {
 //        auto s1 = high_resolution_clock::now();
@@ -115,54 +125,72 @@ int run_experiment(string graphfile, string inputmatrix, int count) {
         T.root->ReducedAL.clear();
 
         st.makeShallowTreeOfTree(&T);
-        //        auto sp1 = high_resolution_clock::now();
-        //        auto durationf = duration_cast<microseconds>(sp1 - s1);
-        //        cout << "make st:" << durationf.count() << endl;
-        //        s1 = high_resolution_clock::now();
+
         Toggle(inactiveNodes, activeNodes, &G);
-        //        sp1 = high_resolution_clock::now();
-        //        durationf = duration_cast<microseconds>(sp1 - s1);
-        //        cout << "tpggle st:" << durationf.count() << endl;
-        //        s1 = high_resolution_clock::now();
 
         auto s1 = high_resolution_clock::now();
         UpdateShallowTree(inactiveNodes, activeNodes, &st, &T, &G);
-        //        sp1 = high_resolution_clock::now();
-        //        durationf = duration_cast<microseconds>(sp1 - s1);
-        //        cout << "update st st:" << durationf.count() << endl;
+
         TStar->adjList.clear();
         TStar->preOrderList.clear();
         TStar->root = nullptr;
         s1 = high_resolution_clock::now();
-        Reroot(T.root, &T, TStar, &D);
-        //        sp1 = high_resolution_clock::now();
-        //        durationf = duration_cast<microseconds>(sp1 - s1);
-        //        cout << "Reroot st:" << durationf.count() << endl;
+        Reroot2(T.root, &T, TStar, &D);
+
         TStar->root = T.root;
 //        if (TStar->root->childreni.size() != 1)
 //            cout << "numOfCom in pap: " << t << ":" << TStar->root->childreni.size() << endl;
         auto sp1 = high_resolution_clock::now();//auto
         auto durationf = duration_cast<microseconds>(sp1 - s1);//AUTO
-        updateTime[t] = durationf.count();
-        //        cout << "Updatee:" << t << durationf.count() << endl;
-        //        TStar->ComputePreorderList();
+        updateTimeReroot2[t] = durationf.count();
+        // DFS-tree by paper
+        G.makeAllNodesUnvisited();
 
+        T.root->visited = false;
+        T.root->ReducedAL.clear();
+
+        st.makeShallowTreeOfTree(&T);
+
+        Toggle(inactiveNodes, activeNodes, &G);
+
+        s1 = high_resolution_clock::now();
+        UpdateShallowTree(inactiveNodes, activeNodes, &st, &T, &G);
+
+        TStar->adjList.clear();
+        TStar->preOrderList.clear();
+        TStar->root = nullptr;
+        s1 = high_resolution_clock::now();
+        Reroot(T.root, &T, TStar, &D);
+
+        TStar->root = T.root;
+        //        if (TStar->root->childreni.size() != 1)
+        //            cout << "numOfCom in pap: " << t << ":" << TStar->root->childreni.size() << endl;
+        sp1 = high_resolution_clock::now();//auto
+        durationf = duration_cast<microseconds>(sp1 - s1);//AUTO
+        updateTimeReroot[t] = durationf.count();
     }
     auto stop = high_resolution_clock::now();
     auto durationf = duration_cast<microseconds>(stop - start);
 //    cout << "pap: " << durationf.count() << endl;
+    int my_time = 0;
+    for(auto &h: updateTimeReroot2){
+        my_time+= h;
+    }
+    cout << "mya: " << (float) my_time / 1e3 << endl;
+    run_time[0][count] = (float) my_time;
     int paper_time = 0;
-    for(auto &h: updateTime){
+    for(auto &h: updateTimeReroot){
         paper_time+= h;
     }
     cout << "pap: " << (float) paper_time / 1e3 << endl;
-    std::ofstream out("paper.csv");
-
-    for (auto &el : updateTime) {
-        out << el;
-        //        cout << el;
-        out << '\n';
-    }
+    run_time[1][count] = (float) paper_time;
+//    std::ofstream out("paper.csv");
+//
+//    for (auto &el : updateTimeReroot) {
+//        out << el;
+//        //        cout << el;
+//        out << '\n';
+//    }
 
     //DFS
     auto dfsstart = high_resolution_clock::now();
@@ -193,19 +221,20 @@ int run_experiment(string graphfile, string inputmatrix, int count) {
 
         auto sp1 = high_resolution_clock::now();
         auto durationf = duration_cast<microseconds>(sp1 - s1);
-        updateTime[t] = durationf.count();
+        updateTimeReroot[t] = durationf.count();
     }
 
     auto dfsstop = high_resolution_clock::now();
     auto dfsduration = duration_cast<microseconds>(dfsstop - dfsstart);
 //    cout << "dfs: " << dfsduration.count() << endl;
     int dfs_time = 0;
-    for(auto &h: updateTime){
+    for(auto &h: updateTimeReroot){
         dfs_time+= h;
     }
     cout << "dfs: " << (float) dfs_time / 1e3 << endl;
+    run_time[2][count] = dfs_time;
 
-    float ratio =  (float) dfs_time / (float) paper_time ;
+    float ratio =  (float) dfs_time / (float) my_time ;
     cout << "paper/dfs: " << ratio;
     if (ratio > 1.0) {
         cout << " ****";
@@ -213,11 +242,13 @@ int run_experiment(string graphfile, string inputmatrix, int count) {
     cout << "\n\n";
     std::ofstream dfs("dfs.csv");
 
-    for (auto &el : updateTime) {
-        dfs << el;
-        //        cout << el;
-        dfs << '\n';
-    }
+//    std::ofstream dfs("dfs.csv");
+//
+//    for (auto &el : updateTime) {
+//        dfs << el;
+//        //        cout << el;
+//        dfs << '\n';
+//    }
 
     return 0;
 }
