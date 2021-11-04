@@ -1,0 +1,8 @@
+{
+"graph_filename": "Graph.txt",
+"input_matrices_dirname": "Data",
+"data": [
+{"GRAPH_SW_N11_E22_P0.5_K4_T": ["07-13--23-45-34-DENSITY0.55_TS10_input.npy","07-25--18-47-31-DENSITY0.9_TS10_input.npy","07-25--18-47-36-DENSITY0.95_TS10_input.npy","07-25--18-48-20-DENSITY0.95_TS100_input.npy"]},
+
+{"GRAPH_SW_N100_E4000_P0.1_K80_T": ["08-09--17-28-48-DENSITY0.8_TS100_input.npy","08-15--02-02-36-DENSITY0.9_TS100_input.npy"]}]
+}
