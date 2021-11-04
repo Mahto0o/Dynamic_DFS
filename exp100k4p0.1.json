@@ -1,0 +1,63 @@
+{"data":[
+        {
+        "graph": "/Users/mahtashafieesabet/Desktop/codes/pythonproject/datasets/GRAPH_SW_N100_E200_P0.1_K4_T/",
+        "inputmatrix": "Data/09-06--19-00-26-DENSITY0.9875_TS1000_input.npy"
+        },
+	{
+        "graph": "/Users/mahtashafieesabet/Desktop/codes/pythonproject/datasets/GRAPH_SW_N100_E200_P0.1_K4_T/",
+        "inputmatrix": "Data/09-06--19-00-02-DENSITY0.975_TS1000_input.npy"
+        },
+	{
+        "graph": "/Users/mahtashafieesabet/Desktop/codes/pythonproject/datasets/GRAPH_SW_N100_E200_P0.1_K4_T/",
+        "inputmatrix": "Data/09-06--18-59-24-DENSITY0.95_TS1000_input.npy"
+        },
+	{
+        "graph": "/Users/mahtashafieesabet/Desktop/codes/pythonproject/datasets/GRAPH_SW_N100_E200_P0.1_K4_T/",
+        "inputmatrix": "Data/09-06--18-58-34-DENSITY0.9_TS1000_input.npy"
+        },
+	{
+        "graph": "/Users/mahtashafieesabet/Desktop/codes/pythonproject/datasets/GRAPH_SW_N100_E200_P0.1_K4_T/",
+        "inputmatrix": "Data/09-06--18-58-48-DENSITY0.8_TS1000_input.npy"
+        },
+	{
+        "graph": "/Users/mahtashafieesabet/Desktop/codes/pythonproject/datasets/GRAPH_SW_N100_E200_P0.1_K4_T/",
+        "inputmatrix": "Data/09-06--18-58-51-DENSITY0.7_TS1000_input.npy"
+        },
+	{
+        "graph": "/Users/mahtashafieesabet/Desktop/codes/pythonproject/datasets/GRAPH_SW_N100_E200_P0.1_K4_T/",
+        "inputmatrix": "Data/09-06--18-58-56-DENSITY0.6_TS1000_input.npy"
+        },
+	{
+        "graph": "/Users/mahtashafieesabet/Desktop/codes/pythonproject/datasets/GRAPH_SW_N100_E200_P0.1_K4_T/",
+        "inputmatrix": "Data/09-06--18-59-00-DENSITY0.5_TS1000_input.npy"
+        },
+	{
+        "graph": "/Users/mahtashafieesabet/Desktop/codes/pythonproject/datasets/GRAPH_SW_N100_E200_P0.1_K4_T/",
+        "inputmatrix": "Data/09-06--18-59-03-DENSITY0.4_TS1000_input.npy"
+        },
+	{
+        "graph": "/Users/mahtashafieesabet/Desktop/codes/pythonproject/datasets/GRAPH_SW_N100_E200_P0.1_K4_T/",
+        "inputmatrix": "Data/09-06--18-59-07-DENSITY0.3_TS1000_input.npy"
+        },
+	{
+        "graph": "/Users/mahtashafieesabet/Desktop/codes/pythonproject/datasets/GRAPH_SW_N100_E200_P0.1_K4_T/",
+        "inputmatrix": "Data/09-06--18-59-11-DENSITY0.2_TS1000_input.npy"
+        },
+	{
+        "graph": "/Users/mahtashafieesabet/Desktop/codes/pythonproject/datasets/GRAPH_SW_N100_E200_P0.1_K4_T/",
+        "inputmatrix": "Data/09-06--18-59-14-DENSITY0.1_TS1000_input.npy"
+        },
+	{
+        "graph": "/Users/mahtashafieesabet/Desktop/codes/pythonproject/datasets/GRAPH_SW_N100_E200_P0.1_K4_T/",
+        "inputmatrix": "Data/09-06--18-59-35-DENSITY0.05_TS1000_input.npy"
+        },
+	{
+        "graph": "/Users/mahtashafieesabet/Desktop/codes/pythonproject/datasets/GRAPH_SW_N100_E200_P0.1_K4_T/",
+        "inputmatrix": "Data/09-06--18-59-46-DENSITY0.025_TS1000_input.npy"
+        },
+	{
+        "graph": "/Users/mahtashafieesabet/Desktop/codes/pythonproject/datasets/GRAPH_SW_N100_E200_P0.1_K4_T/",
+        "inputmatrix": "Data/09-06--18-59-54-DENSITY0.0125_TS1000_input.npy"
+        }
+
+]}

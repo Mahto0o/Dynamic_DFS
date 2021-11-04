@@ -5,7 +5,8 @@
 #include <string>
 #include "node.h"
 #include "tree.h"
-using namespace std;
+
+
 #ifndef CLION_GRAPH_H
 #define CLION_GRAPH_H
 

@@ -21,3 +21,6 @@ path::~path() {
     this->end = nullptr;
     this->par = nullptr;
 }
+bool path::operator() (path *p1, path *p2) const{
+    return p1->start->indexInOrderedList < p2->start->indexInOrderedList;
+}

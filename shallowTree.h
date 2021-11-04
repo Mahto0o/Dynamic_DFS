@@ -4,8 +4,8 @@
 #include <vector>
 #include "path.h"
 #include "tree.h"
-//#include <deque>
-#include "linkedList.h"
+#include <set>
+//#include "linkedList.h"
 using namespace std;
 #ifndef CLION_SHALLOWTREE_H
 #define CLION_SHALLOWTREE_H
@@ -13,7 +13,8 @@ using namespace std;
 
 class shallowTree {
 public:
-    linkedList paths;//list of path*
+//    linkedList paths;//list of path*
+    std::set<path*,path> paths;
     shallowTree();
     void makeShallowTreeOfTree(tree* T);
 

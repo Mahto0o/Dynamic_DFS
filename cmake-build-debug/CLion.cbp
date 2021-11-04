@@ -102,12 +102,6 @@
 		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/Dynamic_DFS/graph.h">
 			<Option target="CLion"/>
 		</Unit>
-		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/Dynamic_DFS/linkedList.cpp">
-			<Option target="CLion"/>
-		</Unit>
-		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/Dynamic_DFS/linkedList.h">
-			<Option target="CLion"/>
-		</Unit>
 		<Unit filename="/Users/mahtashafieesabet/Desktop/codes/Dynamic_DFS/main.cpp">
 			<Option target="CLion"/>
 		</Unit>

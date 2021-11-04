@@ -5,7 +5,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/CLion.dir/SegmentTree.cpp.o"
   "CMakeFiles/CLion.dir/dataStructure.cpp.o"
   "CMakeFiles/CLion.dir/graph.cpp.o"
-  "CMakeFiles/CLion.dir/linkedList.cpp.o"
   "CMakeFiles/CLion.dir/main.cpp.o"
   "CMakeFiles/CLion.dir/node.cpp.o"
   "CMakeFiles/CLion.dir/nodeCMP.cpp.o"

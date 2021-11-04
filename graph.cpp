@@ -168,8 +168,8 @@ tree graph::ComputeDFSTreeBetweenActiveNodes() {
 }
 
 void graph::RcursiveDFSBetweenAN(tree *T, node *v) {
-    static int c=1;
-    c++;
+//    static int c=1;
+//    c++;
 //    cout << "dfs() is called " << c << " times" << endl;
     if (T->adjList.empty()) {
         node *dummyNode;
@@ -186,26 +186,17 @@ void graph::RcursiveDFSBetweenAN(tree *T, node *v) {
         dummyNode->cpNbrs = dummyNode->neighbours;
 
         T->root = dummyNode;
-//        T.adjList.push_back(dummyNode);
-//        dummyNode->visited = true;
-//        if (dummyNode->cpNbrs.empty()) {
-//            return;
-//        } else {
-//            node *x = dummyNode->cpNbrs.back();
-//            dummyNode->children.push_back(x);
-//            x->par = dummyNode;
-//            dummyNode->cpNbrs.pop_back();
-//            this->RcursiveDFSBetweenAN(T, x);
-//        }
     }
     if (v->cpNbrs.empty()) {
+        T->adjList.push_back(v);
+        v->visited = true;
         return;
     } else {
         T->adjList.push_back(v);
         v->visited = true;
         for (auto &i: v->cpNbrs) {
-            static int c=1;
-            c++;
+//            static int c=1;
+//            c++;
 //            cout << "dfs() is called " << c << " times" << endl;
             if (!(i->visited) && i->active) {
                 v->children.push_back(i);

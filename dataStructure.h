@@ -16,12 +16,15 @@ using namespace std;
 
 class dataStructure {
 public:
-    using Cmp = std::integral_constant<decltype(&nodeCMP), &nodeCMP>;
-    vector<set<node *, Cmp> > ds;
+//    using Cmp = std::integral_constant<decltype(&nodeCMP), &nodeCMP>;
+//    vector<set<node *, Cmp> > ds;
+    vector<vector<node *>> data_structure;
 
 
-    void computeDs(graph G, tree T);
+    void computeDs(graph* G, tree* T);
+
     node* query(node* x, node* pathStart, node* pathEnd);
+    node* query2(node* x, node* pathStart, node* pathEnd);
 };
 
 

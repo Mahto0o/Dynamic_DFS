@@ -1,3 +1,7 @@
+
+# Consider dependencies only in project.
+set(CMAKE_DEPENDS_IN_PROJECT_ONLY OFF)
+
 # The set of languages for which implicit dependencies are needed:
 set(CMAKE_DEPENDS_LANGUAGES
   "CXX"
@@ -8,7 +12,6 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/mahtashafieesabet/Desktop/codes/Dynamic_DFS/SegmentTree.cpp" "/Users/mahtashafieesabet/Desktop/codes/Dynamic_DFS/cmake-build-debug/CMakeFiles/CLion.dir/SegmentTree.cpp.o"
   "/Users/mahtashafieesabet/Desktop/codes/Dynamic_DFS/dataStructure.cpp" "/Users/mahtashafieesabet/Desktop/codes/Dynamic_DFS/cmake-build-debug/CMakeFiles/CLion.dir/dataStructure.cpp.o"
   "/Users/mahtashafieesabet/Desktop/codes/Dynamic_DFS/graph.cpp" "/Users/mahtashafieesabet/Desktop/codes/Dynamic_DFS/cmake-build-debug/CMakeFiles/CLion.dir/graph.cpp.o"
-  "/Users/mahtashafieesabet/Desktop/codes/Dynamic_DFS/linkedList.cpp" "/Users/mahtashafieesabet/Desktop/codes/Dynamic_DFS/cmake-build-debug/CMakeFiles/CLion.dir/linkedList.cpp.o"
   "/Users/mahtashafieesabet/Desktop/codes/Dynamic_DFS/main.cpp" "/Users/mahtashafieesabet/Desktop/codes/Dynamic_DFS/cmake-build-debug/CMakeFiles/CLion.dir/main.cpp.o"
   "/Users/mahtashafieesabet/Desktop/codes/Dynamic_DFS/node.cpp" "/Users/mahtashafieesabet/Desktop/codes/Dynamic_DFS/cmake-build-debug/CMakeFiles/CLion.dir/node.cpp.o"
   "/Users/mahtashafieesabet/Desktop/codes/Dynamic_DFS/nodeCMP.cpp" "/Users/mahtashafieesabet/Desktop/codes/Dynamic_DFS/cmake-build-debug/CMakeFiles/CLion.dir/nodeCMP.cpp.o"
@@ -21,6 +24,10 @@ set(CMAKE_CXX_COMPILER_ID "AppleClang")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
+  )
+
+# The set of dependency files which are needed:
+set(CMAKE_DEPENDS_DEPENDENCY_FILES
   )
 
 # Targets to which this target links.
