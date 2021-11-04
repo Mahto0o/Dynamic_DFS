@@ -19,7 +19,7 @@ void ComputeReducedAL2(node *x, node *y, dataStructure *ds, tree *T);
 void Reroot(node *x, tree *T, tree *Tstar, dataStructure *ds);
 void Reroot2(node *x, tree *T, tree *Tstar, dataStructure *ds);
 
-void Toggle(vector<int> &inactiveNodes, vector<int> &activeNodes, graph *G);
+void Toggle(vector<int> &inactiveNodes, vector<int> &activeNodes, graph &G);
 
 void UpdateShallowTree(vector<int> &inactiveNodes, vector<int> &activeNodes, shallowTree *st, tree *T, graph *G);
 

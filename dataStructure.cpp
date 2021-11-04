@@ -42,10 +42,13 @@ node *dataStructure::query2(node *x, node *pathStart, node *pathEnd) {
     std::vector<node*> &ancestors = this->data_structure[x->dfn];
     int min = 0, max = ancestors.size() - 1;
     int mean;
+    if(ancestors[min]->dfn > pathEnd->dfn || ancestors[max]->dfn < pathStart->dfn){
+        return nullptr;
+    }
     while (max > min) {
         mean = (max + min) / 2;
         if (ancestors[mean]->dfn >= pathStart->dfn &&
-        ancestors[mean]->dfn <= pathEnd->dfn) {
+        ancestors[mean]->dfn <= pathEnd->dfn ) {
             return ancestors[mean];
         } else if (ancestors[mean]->dfn < pathStart->dfn) {
             min = (mean + 1);

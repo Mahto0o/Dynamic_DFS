@@ -93,12 +93,12 @@ void ComputeReducedAL2(node *x, node *y, dataStructure *ds, tree *T) {
 
     miu = T->preOrderList[x->dfn]->nodePath->par;   //p.par;
     while (miu != nullptr && miu->start != nullptr && miu->end != nullptr) {
-        for (int i = x->dfn; i <= y->dfn; i++) {
-            if (miu->start->visited) {
+        for (int i = y->dfn; i >= x->dfn; i--) {
+            if (miu->end->visited) {
                 break;
             }
             w = ds->query2(T->preOrderList[i], miu->start, miu->end);
-            if (w != nullptr && w->active && !w->visited) {
+            if (w != nullptr ){//&& w->active && !w->visited) {
                 T->preOrderList[i]->ReducedAL.insert(w);
                 break;
             }
@@ -112,12 +112,13 @@ void ComputeReducedAL2(node *x, node *y, dataStructure *ds, tree *T) {
             u = T->preOrderList[i];
             if(u->visited){
                 i = u->nodePath->end->indexInOrderedList;
+                continue;
             }
             if (u->active && !u->visited) {
                 w = ds->query2(u, x, y);
                 if (w != nullptr) {
                     w->ReducedAL.insert(u);
-                    i = u->nodePath->end->indexInOrderedList + 1;
+                    i = u->nodePath->end->indexInOrderedList;
                 }
             }
         }
@@ -125,16 +126,18 @@ void ComputeReducedAL2(node *x, node *y, dataStructure *ds, tree *T) {
         if (y != x) {
             for (int i = y->dfn + 1; i < x->dfn + x->sizeofST; i++) { //2 to 10
                 u = T->preOrderList[i];
-                if(u->visited){
-                    i = u->nodePath->end->indexInOrderedList;
-                }
+//                if(u->visited){
+//                    i = u->nodePath->end->indexInOrderedList;
+//                    continue;
+//                }
                 if (u->active && !u->visited) {
                     w = ds->query2(u, T->preOrderList[x->dfn + 1], y);
                     if (w != nullptr) {
                         w->ReducedAL.insert(u);
                         i = u->nodePath->end->indexInOrderedList;
-                    } else {
+                    } else if(u->active) {
                         x->ReducedAL.insert(u);
+                        i = u->nodePath->end->indexInOrderedList;
                     }
                 }
             }
@@ -146,6 +149,7 @@ void ComputeReducedAL2(node *x, node *y, dataStructure *ds, tree *T) {
                 }
                 if (u->active && !u->visited) {
                     x->ReducedAL.insert(u);
+                    i = u->nodePath->end->indexInOrderedList;
                 }
             }
         }
@@ -305,12 +309,12 @@ void Reroot2(node *x, tree *T, tree *Tstar, dataStructure *ds) {
     }
 }
 
-void Toggle(vector<int> &inactiveNodes, vector<int> &activeNodes, graph *G) {
+void Toggle(vector<int> &inactiveNodes, vector<int> &activeNodes, graph &G) {
     for (auto &i: inactiveNodes) {
-        G->adjList[i].active = false;
+        G.adjList[i].active = false;
     }
     for (auto &i: activeNodes) {
-        G->adjList[i].active = true;
+        G.adjList[i].active = true;
     }
 }
 

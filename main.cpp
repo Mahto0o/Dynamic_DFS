@@ -67,17 +67,16 @@ int run_experiment(string graphfile, string inputmatrix, int count, double (&run
     using std::chrono::duration_cast;
     using std::chrono::duration;
     using std::chrono::milliseconds;
-    //    char *INPUTMATRIX = argv[1];
 
-    //    FILENAME =
     auto start = high_resolution_clock::now();
+    //reading the graph and making the first DFS-tree for data structure
     graph G;
     G.readGraph(graphfile);
     tree T;
     T = G.ComputeDFSTree();
 
     T.ComputePreorderList();
-
+    // making the shallow tree and data structure
     shallowTree st;
     st.makeShallowTreeOfTree(&T);
     dataStructure D;
@@ -87,6 +86,7 @@ int run_experiment(string graphfile, string inputmatrix, int count, double (&run
     auto durationpre = duration_cast<microseconds>(endpre - pre);
     cout << "pre processing:" << durationpre.count() << endl;
 
+    //reading the input matrix
     vector<unsigned long> shape;
     bool fortran_order;
     vector<int64_t> data;
@@ -126,7 +126,7 @@ int run_experiment(string graphfile, string inputmatrix, int count, double (&run
 
         st.makeShallowTreeOfTree(&T);
 
-        Toggle(inactiveNodes, activeNodes, &G);
+        Toggle(inactiveNodes, activeNodes, G);
 
         auto s1 = high_resolution_clock::now();
         UpdateShallowTree(inactiveNodes, activeNodes, &st, &T, &G);
@@ -139,7 +139,7 @@ int run_experiment(string graphfile, string inputmatrix, int count, double (&run
 
         TStar->root = T.root;
 //        if (TStar->root->childreni.size() != 1)
-//            cout << "numOfCom in pap: " << t << ":" << TStar->root->childreni.size() << endl;
+//            cout << "numOfCom in mya: " << t << ":" << TStar->root->childreni.size() << endl;
         auto sp1 = high_resolution_clock::now();//auto
         auto durationf = duration_cast<microseconds>(sp1 - s1);//AUTO
         updateTimeReroot2[t] = durationf.count();
@@ -151,7 +151,7 @@ int run_experiment(string graphfile, string inputmatrix, int count, double (&run
 
         st.makeShallowTreeOfTree(&T);
 
-        Toggle(inactiveNodes, activeNodes, &G);
+        Toggle(inactiveNodes, activeNodes, G);
 
         s1 = high_resolution_clock::now();
         UpdateShallowTree(inactiveNodes, activeNodes, &st, &T, &G);
@@ -163,8 +163,8 @@ int run_experiment(string graphfile, string inputmatrix, int count, double (&run
         Reroot(T.root, &T, TStar, &D);
 
         TStar->root = T.root;
-        //        if (TStar->root->childreni.size() != 1)
-        //            cout << "numOfCom in pap: " << t << ":" << TStar->root->childreni.size() << endl;
+//                if (TStar->root->childreni.size() != 1)
+//                    cout << "numOfCom in pap: " << t << ":" << TStar->root->childreni.size() << endl;
         sp1 = high_resolution_clock::now();//auto
         durationf = duration_cast<microseconds>(sp1 - s1);//AUTO
         updateTimeReroot[t] = durationf.count();
@@ -204,17 +204,14 @@ int run_experiment(string graphfile, string inputmatrix, int count, double (&run
                 inactiveNodes.push_back(i);
             }
         }
-//        if(t == 90){
-//            cout << "herein dfs";
-//        }
         G.makeAllNodesUnvisited();
         T.root->visited = false;
         T.root->ReducedAL.clear();
         T.adjList.clear();
         T.preOrderList.clear();
-        Toggle(inactiveNodes, activeNodes, &G);
+        Toggle(inactiveNodes, activeNodes, G);
         auto s1 = high_resolution_clock::now();
-//        T = G.ComputeDFSTreeBetweenActiveNodes();
+
         G.RcursiveDFSBetweenAN(&T, &G.dummyNode);
 //        if (T.root->children.size() != 1)
 //            cout << "numOfCom in dfs: " << t << ":" << T.root->children.size() << endl;
@@ -235,7 +232,7 @@ int run_experiment(string graphfile, string inputmatrix, int count, double (&run
     run_time[2][count] = dfs_time;
 
     float ratio =  (float) dfs_time / (float) my_time ;
-    cout << "paper/dfs: " << ratio;
+    cout << "dfs/mya: " << ratio;
     if (ratio > 1.0) {
         cout << " ****";
     }
